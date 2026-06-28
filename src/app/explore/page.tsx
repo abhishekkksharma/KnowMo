@@ -1,10 +1,12 @@
+"use client"
+
 import Navbar from '../../../components/headers/Navbar'
+import ExplorePage from '../../../components/explore/explore'
 
 function Explore() {
   return (
     <div>
-        {/* <Navbar/> */}
-        <h1>Explore</h1>
+        <ExplorePage/>
     </div>
   )
 }

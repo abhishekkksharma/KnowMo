@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import Logo from "../headers/Logo";
 import AppLogos from "../../assets/appLogos";

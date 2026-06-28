@@ -4,7 +4,6 @@ import ContentBlock from '../../../components/about/ContentBlock'; // Adjust pat
 import Image from "../../../assets/about/image.png"
 import Image2 from "../../../assets/about/image2.png"
 import Image3 from "../../../assets/about/image3.png"
-import Footer from "../../../components/footer/footer"
 
 export default function AboutPage() {
   return (
@@ -74,7 +73,6 @@ export default function AboutPage() {
           }
         />
       </div>
-      <Footer />
     </main>
   );
 }
