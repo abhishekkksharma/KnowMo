@@ -9,7 +9,6 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/user/signup",handleUserSignup)
-
+router.post("/signup",handleUserSignup)
 
 export default router;
