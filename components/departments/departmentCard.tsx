@@ -48,7 +48,7 @@ function DepartmentCard({
       <div
         className="
           pointer-events-none absolute inset-0 hidden dark:block
-          bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_35%)]
+          bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.01),transparent_35%)]
         "
       />
 

@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 const app = require("./app");
-const { connectToMongoDB } = require("./connectMongo");
+const { connectToMongoDB, syncExistingSubjects } = require("./connectMongo");
 
 
 dotenv.config();
@@ -12,8 +12,9 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-connectToMongoDB(MONGODB_URL).then(() => {
+connectToMongoDB(MONGODB_URL).then(async () => {
   console.log("MongoDB connected!");
+ // await syncExistingSubjects();
 });
 
 export {};

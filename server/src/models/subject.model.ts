@@ -52,4 +52,4 @@ const subjectSchema = new Schema<ISubject>(
 
 const Subject = mongoose.model<ISubject>("Subject", subjectSchema);
 
-module.exports = Subject;
+export default Subject;

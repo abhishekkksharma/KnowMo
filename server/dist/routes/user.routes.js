@@ -9,5 +9,5 @@ router.get("/", (req, res) => {
     });
 });
 router.post("/signup", handleUserSignup);
-exports.default = router;
+module.exports = router;
 //# sourceMappingURL=user.routes.js.map

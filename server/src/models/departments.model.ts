@@ -12,7 +12,7 @@ export interface IDepartment extends Document {
   totalResources?: number;
   totalSubjects?: number;
 
-  subjects?: string[];
+  subjects?: mongoose.Types.ObjectId[];
 
   hod?: string;
 
@@ -61,10 +61,12 @@ const departmentSchema = new Schema<IDepartment>(
       type: Number,
       default: 0,
     },
-    subjects: {
-      type: [String],
-      default: [],
-    },
+    subjects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Subject",
+      },
+    ],
 
     hod: String,
 

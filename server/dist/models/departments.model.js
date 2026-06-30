@@ -66,10 +66,12 @@ const departmentSchema = new mongoose_1.Schema({
         type: Number,
         default: 0,
     },
-    subjects: {
-        type: [String],
-        default: [],
-    },
+    subjects: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Subject",
+        },
+    ],
     hod: String,
     image: String,
     banner: String,

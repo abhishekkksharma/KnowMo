@@ -1,4 +1,6 @@
-const Subject = require("../models/subject.model")
+import Subject from "../models/subject.model";
+import Departments from "../models/departments.model";
+import mongoose from "mongoose";
 import { Request, Response } from "express";
 
 async function handleAddNewSubject(
@@ -45,6 +47,17 @@ async function handleAddNewSubject(
       });
     }
 
+    // Find the department with the matching departmentCode
+    const department = await Departments.findOne({
+      departmentCode: departmentCode.trim().toUpperCase(),
+    });
+
+    if (!department) {
+      return res.status(404).json({
+        message: "Department not found",
+      });
+    }
+
     // Check duplicate subject code
     const existingSubject = await Subject.findOne({
       subjectCode: subjectCode.toUpperCase(),
@@ -63,6 +76,14 @@ async function handleAddNewSubject(
       semester,
       subjectCode: subjectCode.toUpperCase(),
     });
+
+    // Add subject to department's subjects array and update totalSubjects count
+    if (!department.subjects) {
+      department.subjects = [];
+    }
+    department.subjects.push(subject._id as mongoose.Types.ObjectId);
+    department.totalSubjects = department.subjects.length;
+    await department.save();
 
     return res.status(201).json({
       message: "Subject created successfully",

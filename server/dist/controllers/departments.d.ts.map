@@ -1,1 +1,1 @@
-{"version":3,"file":"departments.d.ts","sourceRoot":"","sources":["../../src/controllers/departments.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAE5C,iBAAe,oBAAoB,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ,+CAY9D;;;;AAED,wBAEE"}
+{"version":3,"file":"departments.d.ts","sourceRoot":"","sources":["../../src/controllers/departments.ts"],"names":[],"mappings":""}
