@@ -71,8 +71,8 @@ function DepartmentMain() {
         <p className="mb-3 font-mono text-sm font-semibold text-zinc-400">
           Departments.
         </p>
-        <h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white md:text-5xl lg:leading-[1.1]">
-          <span className="bg-pink-50 px-1 dark:bg-pink-700">
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white md:text-4xl lg:leading-[1.1]">
+          <span className="bg-pink-50 dark:bg-pink-700 px-1">
             Explore your branch
           </span>
           , discover subjects, and find shared study materials

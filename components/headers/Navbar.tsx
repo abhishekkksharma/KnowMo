@@ -46,8 +46,8 @@ export default function Navbar() {
       label: "Departments",
       href: "/departments",
       dropdown: [
-        { label: "CSE", href: "/departments/cse" },
-        { label: "ECE", href: "/departments/ece" },
+        { label: "CSE", href: "/departments/CSE" },
+        { label: "ECE", href: "/departments/ECE" },
         { label: "See All", href: "/departments" },
       ],
     },

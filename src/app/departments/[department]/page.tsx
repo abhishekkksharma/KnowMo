@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import SubjectMain from "../../../../components/subjects/SubjectMain";
 
 type Props = {
   params: Promise<{
@@ -6,8 +6,12 @@ type Props = {
   }>;
 };
 
-export default async function Department({ params }: Props) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ department: string }>;
+}) {
   const { department } = await params;
 
-  return <h1>Department ID: {department}</h1>;
+  return <SubjectMain departmentCode={department} />;
 }
