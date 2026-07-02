@@ -1,4 +1,4 @@
-import SubjectMain from "../../../../components/subjects/SubjectMain";
+import SubjectMain from "../../../../components/subjects/SubjectsMain";
 
 type Props = {
   params: Promise<{

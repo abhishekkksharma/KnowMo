@@ -1,11 +1,15 @@
-import React from 'react'
+type Props = {
+  searchParams: Promise<{
+    subjectCode?: string;
+  }>;
+};
 
-function Subject() {
+export default async function SubjectPage({ searchParams }: Props) {
+  const { subjectCode } = await searchParams;
+
   return (
-    <>
-    Subject page
-    </>
-  )
+    <h1>
+      Subject Page: {subjectCode}
+    </h1>
+  );
 }
-
-export default Subject

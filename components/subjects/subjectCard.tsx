@@ -6,7 +6,7 @@ interface SubjectCardProps {
   year: number;
   semester?: number;
   departmentCode: string;
-  subjectCode?: string;
+  subjectCode: string;
   viewType?: "card" | "tile";
 }
 
@@ -103,7 +103,7 @@ function SubjectCard({
         <div className="relative z-10 flex-shrink-0">
           <Link
           // need to fix this 
-            href={`/departments`}
+            href={`/subject?subjectCode=${subjectCode}`}
             className="
               rounded-full
               bg-zinc-900
@@ -125,7 +125,6 @@ function SubjectCard({
       </div>
     );
   }
-
   return (
     <div
       className="
@@ -233,7 +232,7 @@ function SubjectCard({
           </div>
 
           <Link
-            href={`/departments/${departmentCode}`}
+            href={`/subject?subjectCode=${subjectCode}`}
             className="
               rounded-full
               bg-zinc-900
