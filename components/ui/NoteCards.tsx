@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Caveat, Shadows_Into_Light } from "next/font/google";
+import { motion, Variants } from "framer-motion";
 
 const caveat = Caveat({
     subsets: ["latin"],
@@ -24,12 +25,52 @@ export default function ThemeCards() {
 
     const cardSize = "w-56 h-60";
 
+    const quoteCardVariants: Variants = {
+        initial: { opacity: 0, scale: 0.8, rotate: 0, x: -20 },
+        animate: { 
+            opacity: 1, 
+            scale: 1, 
+            rotate: -10, 
+            x: 0,
+            transition: { type: "spring", stiffness: 80, damping: 12, delay: 0.1 } 
+        },
+        hover: { 
+            rotate: -18, 
+            x: -24, 
+            y: -8,
+            transition: { type: "spring", stiffness: 150, damping: 15 }
+        }
+    };
+
+    const notebookCardVariants: Variants = {
+        initial: { opacity: 0, scale: 0.8, rotate: 0, x: 20 },
+        animate: { 
+            opacity: 1, 
+            scale: 1, 
+            rotate: 8, 
+            x: 0,
+            transition: { type: "spring", stiffness: 80, damping: 12, delay: 0.2 } 
+        },
+        hover: { 
+            rotate: 14, 
+            x: 24, 
+            y: 16,
+            transition: { type: "spring", stiffness: 150, damping: 15 }
+        }
+    };
+
     return (
-        <div className="flex md:mt-0 mt-30 items-center justify-center bg-transparent">
-            <div className="relative w-96 h-96 group cursor-pointer">
+        <div className="flex md:mt-0 mt-0 items-center justify-center bg-transparent">
+            <motion.div 
+                initial="initial"
+                animate="animate"
+                whileHover="hover"
+                className="relative w-96 h-96 cursor-pointer"
+            >
                 {/* Quote Card */}
-                <div
-                    className={`absolute top-4 left-4 ${cardSize} bg-[#0a0a0a] rounded-[2.5rem] border border-gray-800 shadow-2xl shadow-gray-400/50 dark:shadow-lg -rotate-[10deg] transition-all duration-500 ease-out group-hover:-rotate-[18deg] group-hover:-translate-x-6 group-hover:-translate-y-2 z-10 flex flex-col p-7`}
+                <motion.div
+                    variants={quoteCardVariants}
+                    className={`absolute top-4 left-12 ${cardSize} bg-[#0a0a0a] rounded-[2.5rem] border border-gray-800 shadow-2xl shadow-gray-400/50 dark:shadow-lg z-10 flex flex-col p-7`}
                 >
                     <div className="text-white text-7xl font-serif leading-none mt-2">
                         “
@@ -40,17 +81,14 @@ export default function ThemeCards() {
                         <div className="h-2.5 w-full bg-gray-500 rounded-full" />
                         <div className="h-2.5 w-3/4 bg-gray-500 rounded-full" />
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Notebook Card */}
-                <div
-                    className={`absolute top-12 left-12 sm:top-14 sm:left-16 md:top-16 md:left-20 ${cardSize}
+                <motion.div
+                    variants={notebookCardVariants}
+                    className={`absolute top-12 left-24 sm:top-14 sm:left-28 md:top-16 md:left-32 ${cardSize}
                         bg-[#FBECA0] rounded-[2.5rem] shadow-2xl dark:shadow-lg
-                        shadow-gray-400/60 dark:shadow-gray-600/90 rotate-[8deg]
-                        transition-all duration-500 ease-out
-                        group-hover:rotate-[14deg]
-                        group-hover:translate-x-4 md:group-hover:translate-x-6
-                        group-hover:translate-y-3 md:group-hover:translate-y-4
+                        shadow-gray-400/60 dark:shadow-gray-600/90
                         z-20 overflow-hidden flex flex-col`}
                 >
                     {/* Header */}
@@ -87,8 +125,8 @@ export default function ThemeCards() {
                             <div className="h-[1.65rem] border-b border-orange-300/40" />
                         </div>
                     </div>
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
         </div>
     );
 }
