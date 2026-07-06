@@ -1,7 +1,8 @@
-"use client"
-
-import Navbar from '../../../components/headers/Navbar'
 import ExplorePage from '../../../components/explore/explore'
+
+export const metadata = {
+  title: "Explore",
+};
 
 function Explore() {
   return (

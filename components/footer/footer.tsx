@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Logo from "../headers/Logo";
 import AppLogos from "../../assets/appLogos";
-
+import { Heart, Mail } from "lucide-react"
 function Footer() {
   const links = [
     { name: "Home", href: "/" },
@@ -74,13 +74,29 @@ function Footer() {
                 className="w-7 h-7 opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-200 dark:invert"
               />
             </Link>
+
+            <a href="mailto:abhisheksharma7340733@gmail.com">
+              <Mail
+                className="w-9 h-9 opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-200 dark:invert"
+              />
+            </a>
           </div>
         </div>
       </div>
 
-      <div className="mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800">
-        <p className="text-center text-sm text-zinc-500 dark:text-zinc-400">
-          © {new Date().getFullYear()} KnowMo. All rights reserved.
+      <div className="mt-5 border-t border-zinc-100 pt-4 dark:border-zinc-800">
+        <p className="flex items-center justify-center gap-1 text-center text-sm text-zinc-500 dark:text-zinc-400">
+          Made with
+          <Heart className="h-4 w-4 hover:fill-current text-pink-600" />
+          by
+          <a
+            href="https://www.linkedin.com/in/abhishek-sharma-16a8071b7/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium underline underline-offset-2 transition-colors hover:text-zinc-700 dark:hover:text-zinc-200"
+          >
+            Abhishek Sharma
+          </a>
         </p>
       </div>
     </footer>

@@ -262,7 +262,7 @@ export default function SearchBar({
           <div
             className="
               fixed
-              top-[15vh]
+              top-[10vh]
               left-1/2
               -translate-x-1/2
               w-[92%]

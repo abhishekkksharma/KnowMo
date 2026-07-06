@@ -1,3 +1,5 @@
+"use client"
+
 import UpdatesCard from "./updatesCard";
 
 const updates = [
