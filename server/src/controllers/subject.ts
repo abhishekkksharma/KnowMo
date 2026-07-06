@@ -104,6 +104,10 @@ async function handleGetSubjects(
 ) {
     try {
         const { departmentCode } = req.params;
+        await Departments.updateOne(
+            { departmentCode: departmentCode },
+            { $inc: { totalSearches: 1 } }
+        );
 
         const subjects = await Subject.find({ departmentCode });
 

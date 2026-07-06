@@ -29,13 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-          <ThemeProvider>
-        <Providers>
-            <Navbar/>
+        <ThemeProvider>
+          <Providers>
+            <Navbar />
             {children}
-            <Footer/>
-        </Providers>
-          </ThemeProvider>
+            <Footer />
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

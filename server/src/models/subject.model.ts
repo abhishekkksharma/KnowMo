@@ -5,6 +5,7 @@ export interface ISubject extends Document {
   departmentCode: string;
   year: number;
   semester?: number;
+  totalSearches:number;
   subjectCode: string;
   resourceCount: number;
 }
@@ -32,6 +33,10 @@ const subjectSchema = new Schema<ISubject>(
       type: Number,
       min: 1,
       max: 8,
+    },
+    totalSearches: {
+      type: Number,
+      default: 0,
     },
     subjectCode: {
       type: String,
