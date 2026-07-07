@@ -77,7 +77,7 @@ function Footer() {
 
             <a href="mailto:abhisheksharma7340733@gmail.com">
               <Mail
-                className="w-9 h-9 opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-200 dark:invert"
+                className="w-9 h-9 opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-200"
               />
             </a>
           </div>
