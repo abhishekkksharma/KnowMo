@@ -16,7 +16,7 @@ export interface IResource extends Document {
 
   year: number;
 
-  subjectId: mongoose.Types.ObjectId;
+  subjectCode: string;
 
   fileUrl: string;
 
@@ -59,10 +59,11 @@ const resourceSchema = new Schema<IResource>(
       max: 4, // adjust if needed
     },
 
-    subjectId: {
-      type: Schema.Types.ObjectId,
-      ref: "Subject",
+    subjectCode: {
+      type: String,
       required: true,
+      uppercase: true,
+      trim: true,
     },
 
     fileUrl: {

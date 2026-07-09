@@ -57,6 +57,10 @@ const subjectSchema = new mongoose_1.Schema({
         min: 1,
         max: 8,
     },
+    totalSearches: {
+        type: Number,
+        default: 0,
+    },
     subjectCode: {
         type: String,
         required: true,
@@ -68,6 +72,12 @@ const subjectSchema = new mongoose_1.Schema({
         type: Number,
         default: 0,
     },
+    resources: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Resource",
+        },
+    ],
 }, {
     timestamps: true,
 });

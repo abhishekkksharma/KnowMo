@@ -8,6 +8,7 @@ export interface ISubject extends Document {
   totalSearches:number;
   subjectCode: string;
   resourceCount: number;
+  resources?: mongoose.Types.ObjectId[];
 }
 
 const subjectSchema = new Schema<ISubject>(
@@ -49,6 +50,12 @@ const subjectSchema = new Schema<ISubject>(
       type: Number,
       default: 0,
     },
+    resources: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Resource",
+      },
+    ],
   },
   {
     timestamps: true,

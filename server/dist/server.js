@@ -11,6 +11,6 @@ app.listen(PORT, () => {
 });
 connectToMongoDB(MONGODB_URL).then(async () => {
     console.log("MongoDB connected!");
-    await syncExistingSubjects();
+    // await syncExistingSubjects();
 });
 //# sourceMappingURL=server.js.map

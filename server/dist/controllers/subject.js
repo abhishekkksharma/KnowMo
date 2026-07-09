@@ -81,6 +81,7 @@ async function handleAddNewSubject(req, res) {
 async function handleGetSubjects(req, res) {
     try {
         const { departmentCode } = req.params;
+        await departments_model_1.default.updateOne({ departmentCode: departmentCode }, { $inc: { totalSearches: 1 } });
         const subjects = await subject_model_1.default.find({ departmentCode });
         return res.status(200).json({ subjects });
     }

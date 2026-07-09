@@ -102,7 +102,7 @@ function SubjectCard({
         {/* Link Button */}
         <div className="relative z-10 flex-shrink-0">
           <Link
-          // need to fix this 
+            // need to fix this 
             href={`/subject?subjectCode=${subjectCode}`}
             className="
               rounded-full

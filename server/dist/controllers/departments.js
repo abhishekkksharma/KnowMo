@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const departments_model_1 = __importDefault(require("../models/departments.model"));
 async function handleGetDepartments(req, res) {
     try {
-        const departments = await departments_model_1.default.find().populate("subjects");
+        // const departments = await Departments.find().populate("subjects");
+        const departments = await departments_model_1.default.find();
         return res.status(200).json(departments);
     }
     catch (error) {

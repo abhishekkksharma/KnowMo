@@ -1,1 +1,1 @@
-{"version":3,"file":"connectMongo.d.ts","sourceRoot":"","sources":["../src/connectMongo.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,UAAU,CAAC;AAIhC,wBAAsB,gBAAgB,CAAC,GAAG,EAAE,MAAM,4BAIjD;AAED,wBAAsB,oBAAoB,kBAiBzC"}
+{"version":3,"file":"connectMongo.d.ts","sourceRoot":"","sources":["../src/connectMongo.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,UAAU,CAAC;AAIhC,wBAAsB,gBAAgB,CAAC,GAAG,EAAE,MAAM,4BAIjD"}

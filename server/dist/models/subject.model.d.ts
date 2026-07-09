@@ -4,8 +4,10 @@ export interface ISubject extends Document {
     departmentCode: string;
     year: number;
     semester?: number;
+    totalSearches: number;
     subjectCode: string;
     resourceCount: number;
+    resources?: mongoose.Types.ObjectId[];
 }
 declare const Subject: mongoose.Model<ISubject, {}, {}, {}, mongoose.Document<unknown, {}, ISubject, {}, mongoose.DefaultSchemaOptions> & ISubject & Required<{
     _id: mongoose.Types.ObjectId;

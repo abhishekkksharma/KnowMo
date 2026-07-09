@@ -62,10 +62,11 @@ const resourceSchema = new mongoose_1.Schema({
         min: 1,
         max: 4, // adjust if needed
     },
-    subjectId: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: "Subject",
+    subjectCode: {
+        type: String,
         required: true,
+        uppercase: true,
+        trim: true,
     },
     fileUrl: {
         type: String,

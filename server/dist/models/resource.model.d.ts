@@ -5,7 +5,7 @@ export interface IResource extends Document {
     customType?: string;
     departmentCode: string;
     year: number;
-    subjectId: mongoose.Types.ObjectId;
+    subjectCode: string;
     fileUrl: string;
     description?: string;
     uploadedBy?: mongoose.Types.ObjectId;
