@@ -1,5 +1,6 @@
 import Resource from "../models/resource.model";
 import Subject from "../models/subject.model";
+import Departments from "../models/departments.model";
 import mongoose from "mongoose";
 import { Request, Response } from "express";
 
@@ -95,10 +96,17 @@ async function handleGetResourcesBySubjectCode(
       return res.status(404).json({ message: "Subject not found" });
     }
 
+    // Fetch the department to get the department name
+    const department = await Departments.findOne({ departmentCode: subject.departmentCode });
+
     // Fetch all resources with this subjectCode
     const resources = await Resource.find({ subjectCode: upperSubjectCode });
 
-    return res.status(200).json({ resources });
+    return res.status(200).json({
+      resources,
+      subject,
+      departmentName: department ? department.name : subject.departmentCode
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Failed to fetch resources" });

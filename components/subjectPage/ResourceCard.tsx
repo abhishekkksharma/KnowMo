@@ -15,74 +15,111 @@ export default function Card({
   icon: Icon,
 }: CardProps) {
   return (
-    <Link href={href}>
+    <Link href={href} target="_blank" rel="noopener noreferrer">
       <div
         className="
-          group
-          flex items-center gap-4
-          rounded-3xl
-          p-4
+          group relative overflow-hidden
+          flex h-52 w-full gap-6 rounded-3xl
+          border border-zinc-200/80
+          bg-gradient-to-b from-white to-zinc-50
+          p-5
+          shadow-[0_8px_30px_rgb(0,0,0,0.08)]
           transition-all duration-300
-          border border-white/20 dark:border-white/10
-          bg-gradient-to-br
-          from-zinc-100
-          via-zinc-200
-          to-zinc-50
-          dark:from-zinc-900
-          dark:via-zinc-800
-          dark:to-zinc-950
-          shadow-lg
-          hover:scale-[1.02]
-          hover:shadow-xl
-          cursor-pointer
+          hover:-translate-y-1
+          hover:shadow-[0_12px_40px_rgb(0,0,0,0.12)]
+
+          dark:border-zinc-800
+          dark:bg-gradient-to-b
+          dark:from-zinc-800
+          dark:via-zinc-900
+          dark:to-black
+          dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)]
         "
       >
-        {/* Icon */}
+        {/* Light Glow */}
         <div
           className="
-            flex h-20 w-20 shrink-0 items-center justify-center
-            rounded-2xl
-            bg-gradient-to-br
-            from-white/80
-            via-zinc-100
-            to-zinc-300
-            dark:from-zinc-800
-            dark:via-zinc-700
-            dark:to-zinc-900
-            shadow-inner
+            absolute inset-0
+            bg-[radial-gradient(circle_at_top_right,rgba(24,24,27,0.05),transparent_40%)]
+            dark:hidden
           "
-        >
-          <Icon
-            size={36}
+        />
+
+        {/* Dark Glow */}
+        <div
+          className="
+            pointer-events-none absolute inset-0 hidden dark:block
+            bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.01),transparent_35%)]
+          "
+        />
+
+        {/* Icon */}
+        <div className="relative z-10 flex items-center justify-center">
+          <div
             className="
-              text-zinc-700
-              dark:text-zinc-200
-              transition-transform
+              flex h-20 w-20 shrink-0 items-center justify-center
+              rounded-2xl
+
+              bg-zinc-100
+              border border-zinc-200
+
+              dark:bg-zinc-800/40
+              dark:border-zinc-700
+              dark:backdrop-blur-sm
+
+              transition-all duration-300
               group-hover:scale-110
             "
-          />
+          >
+            <Icon
+              size={36}
+              className="text-zinc-700 dark:text-zinc-300"
+            />
+          </div>
         </div>
 
         {/* Content */}
-        <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-            {title}
-          </h3>
+        <div className="relative z-10 flex flex-1 flex-col min-w-0">
+          <div>
+            <h3
+              className="
+                line-clamp-2
+                min-h-[3.5rem]
+                text-lg font-bold
+                text-zinc-900
+                dark:text-white
+              "
+            >
+              {title}
+            </h3>
 
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            {description}
-          </p>
-        </div>
+            <p
+              className="
+                mt-2
+                line-clamp-3
+                text-sm
+                text-zinc-600
+                dark:text-zinc-400
+              "
+            >
+              {description}
+            </p>
+          </div>
 
-        {/* Arrow */}
-        <div
-          className="
-            text-zinc-500 dark:text-zinc-400
-            transition-transform duration-300
-            group-hover:translate-x-1
-          "
-        >
-          →
+          {/* Bottom section */}
+          <div className="mt-auto flex justify-end">
+            <div
+              className="
+                text-xl
+                text-zinc-500
+                dark:text-zinc-400
+                transition-transform duration-300
+                group-hover:translate-x-1
+              "
+            >
+              →
+            </div>
+          </div>
         </div>
       </div>
     </Link>
