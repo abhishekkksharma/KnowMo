@@ -1,37 +1,32 @@
-"use client"
+"use client";
 
-import UpdatesCard from "./updatesCard";
-
-const updates = [
-  {
-    update: "DBMS Notes Uploaded",
-    message: "Unit 1 and Unit 2 notes are available.",
-    updatingUser: "Aman Sharma",
-    createdAt: "2026-06-28T10:30:00Z",
-  },
-  {
-    update: "OS Assignment Added",
-    message: "Assignment 3 has been uploaded.",
-    updatingUser: "Faculty",
-    createdAt: "2026-06-27T15:00:00Z",
-  },
-];
+import Updates from "./updates";
 
 function Explore() {
   return (
-    <div className="justify-center flex items-center flex-col h-screen">
-      <p className="text-xl font-semibold mb-4">Updates</p>
+    <div className="min-h-screen pt-38 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
-      <div className="space-y-4 w-100">
-        {updates.map((item, index) => (
-          <UpdatesCard
-            key={index}
-            update={item.update}
-            message={item.message}
-            updatingUser={item.updatingUser}
-            createdAt={item.createdAt}
-          />
-        ))}
+        {/* Left Column: Placeholder main area */}
+        <div className="lg:col-span-8">
+          <p className="mb-3 font-mono text-sm font-semibold tracking-wider text-zinc-400 uppercase">
+            Explore.
+          </p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white md:text-5xl">
+            Explore Hub
+          </h1>
+          <p className="mt-4 max-w-xl font-mono text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
+            Select departments and browse shared files. Main directory features are under development.
+          </p>
+        </div>
+
+        {/* Right Column: Latest Updates Container (Col-span 4) */}
+        <div className="lg:col-span-4 lg:sticky lg:top-24">
+          <div className="bg-white/10 dark:bg-zinc-950/10 backdrop-blur-md rounded-3xl border border-white/30 dark:border-zinc-800/40 p-6 shadow-sm">
+            <Updates />
+          </div>
+        </div>
+
       </div>
     </div>
   );

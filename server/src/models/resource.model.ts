@@ -35,7 +35,7 @@ const resourceSchema = new Schema<IResource>(
 
     type: {
       type: String,
-      enum: ["notes", "pyq", "assignment", "lab", "other"],
+      enum: ["notes", "pyq", "assignment", "lab", "mcqs", "other"],
       required: true,
     },
 

@@ -1,4 +1,7 @@
+"use client";
+
 import { UserRound } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface IUpdate {
   update: string;
@@ -14,100 +17,67 @@ function UpdatesCard({
   createdAt,
 }: IUpdate) {
   return (
-    <div className="w-full rounded-2xl bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:bg-neutral-950">
-      <div className="flex items-start gap-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-800">
-          <UserRound size={16} />
+    <motion.div
+      initial={{ opacity: 0, y: 24, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+      whileHover={{ y: -3, transition: { duration: 0.2 } }}
+      className="
+        w-full 
+        rounded-2xl 
+        bg-white/45 
+        dark:bg-zinc-900/25 
+        backdrop-blur-md 
+        border 
+        border-white/30 
+        dark:border-zinc-800/40 
+        p-2
+        shadow-sm 
+        hover:shadow-md 
+        transition-shadow 
+        duration-300
+      "
+    >
+      <div className="flex items-start gap-3.5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-100/80 dark:bg-zinc-800/80 border border-zinc-200/20 dark:border-zinc-700/20">
+          <UserRound size={16} className="text-zinc-600 dark:text-zinc-400" />
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">
+          <h3 className="text-sm font-semibold tracking-tight text-neutral-900 dark:text-white">
             {update}
           </h3>
 
           {updatingUser && (
-            <p className="text-xs text-neutral-500">
-              {updatingUser}
+            <p className="text-xs text-neutral-400 dark:text-zinc-500 font-mono mt-0.5">
+              by {updatingUser}
             </p>
           )}
 
-          <p className="mt-1 text-sm leading-5 text-neutral-600 dark:text-neutral-400">
+          <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
             {message}
           </p>
 
-          <p className="mt-2 text-xs text-neutral-500">
-            {new Date(createdAt).toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })}
+          <p className="mt-3.5 text-[11px] font-mono text-zinc-400 dark:text-zinc-500 flex items-center justify-between">
+            <span>
+              {new Date(createdAt).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+            <span>
+              {new Date(createdAt).toLocaleTimeString("en-GB", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export default UpdatesCard;
-
-// import { UserRound } from "lucide-react";
-
-// interface IUpdate {
-//   update: string;
-//   message: string;
-//   updatingUser: string;
-//   createdAt: string;
-// }
-
-// function UpdatesCard({
-//   update,
-//   message,
-//   updatingUser,
-//   createdAt,
-// }: IUpdate) {
-//   return (
-//     <div className="w-full rounded-3xl bg-white px-6 py-4 shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-all hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] dark:bg-neutral-950">
-//       {/* Header */}
-//       <div className="flex items-center gap-3">
-//         <div className="flex h-11 w-11 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-800">
-//           <UserRound size={20} />
-//         </div>
-
-//         <div>
-//           <h3 className="text-base font-semibold text-neutral-900 dark:text-white">
-//             {update}
-//           </h3>
-
-//           <p className="text-sm text-neutral-500">
-//             {updatingUser}
-//           </p>
-//         </div>
-//       </div>
-
-//       {/* Content */}
-//       <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-400">
-//         {message}
-//       </p>
-
-//       {/* Divider */}
-//       <div className="my-3 h-px bg-neutral-200 dark:bg-neutral-800" />
-
-//       {/* Footer */}
-//       <div className="flex items-center justify-between">
-//         <p className="text-xs text-neutral-500">
-//           {new Date(createdAt).toLocaleDateString("en-GB", {
-//             day: "numeric",
-//             month: "long",
-//             year: "numeric",
-//           })}
-//         </p>
-
-//         {/* <button className="rounded-full bg-black px-4 py-2 text-xs font-semibold text-white transition hover:opacity-90 dark:bg-white dark:text-black">
-//           View
-//         </button> */}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default UpdatesCard;
