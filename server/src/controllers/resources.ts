@@ -3,6 +3,7 @@ import Subject from "../models/subject.model";
 import Departments from "../models/departments.model";
 import mongoose from "mongoose";
 import { Request, Response } from "express";
+const { createUpdate } = require("../controllers/updates");
 
 async function handleAddNewResource(req: Request, res: Response) {
   try {
@@ -45,6 +46,15 @@ async function handleAddNewResource(req: Request, res: Response) {
     if (!subject) {
       return res.status(404).json({ message: "Subject not found" });
     }
+    
+    // Create update BEFORE saving resource
+await createUpdate(
+  `Resource added for ${subject.name || subject.subjectCode}`,
+  `${type}${customType ? ` (${customType})` : ""} added for ${
+    subject.name || subject.subjectCode
+  }`
+);
+
 
     // Create the resource
     const newResource = await Resource.create({
