@@ -30,7 +30,7 @@ export default function ContentBlock({
             src={imageUrl}
             alt={imageAlt}
             fill
-            className="md:object-cover object-contain "
+            className="md:object-cover object-contain md:rounded-3xl"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>

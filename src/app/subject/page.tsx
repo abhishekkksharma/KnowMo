@@ -1,4 +1,5 @@
 import SubjectPageMain from "../../../components/subjectPage/SubjectPageMain";
+import { Metadata } from "next";
 
 const baseUrl = process.env.NEXT_PUBLIC_CLIENT_BASE_URL || "http://localhost:5000";
 
@@ -8,10 +9,43 @@ type Props = {
   }>;
 };
 
-export async function generateMetadata({ searchParams }: Props) {
+// export async function generateMetadata({ searchParams }: Props) {
+//   const { subjectCode } = await searchParams;
+//   return {
+//     title: subjectCode ? `${subjectCode.toUpperCase()}` : "Subject Details",
+//   };
+// }
+
+export async function generateMetadata({
+  searchParams,
+}: Props): Promise<Metadata> {
   const { subjectCode } = await searchParams;
+
+  if (!subjectCode) {
+    return {
+      title: "Subject Details",
+    };
+  }
+
+  try {
+    const response = await fetch(
+      `${baseUrl}/api/resource/${subjectCode}`,
+      { cache: "no-store" }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+
+      return {
+        title: data.subject?.name || subjectCode.toUpperCase(),
+      };
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
   return {
-    title: subjectCode ? `${subjectCode.toUpperCase()}` : "Subject Details",
+    title: subjectCode.toUpperCase(),
   };
 }
 

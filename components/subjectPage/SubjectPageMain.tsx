@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import {createMetadata} from "../../lib/metadata"
 import { 
   ArrowLeft, 
   Search, 
@@ -104,7 +105,13 @@ export default function SubjectPageMain({
     pyq: resources.filter((r) => r.type === "pyq").length,
     assignment: resources.filter((r) => r.type === "assignment").length,
     lab: resources.filter((r) => r.type === "lab").length,
-    other: resources.filter((r) => r.type === "other").length,
+    other: resources.filter(
+  (r) =>
+    r.type !== "notes" &&
+    r.type !== "pyq" &&
+    r.type !== "assignment" &&
+    r.type !== "lab"
+).length,
   };
 
   const tabs = [
