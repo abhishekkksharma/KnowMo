@@ -1,6 +1,7 @@
 "use client";
 
 import Updates from "./updates";
+import PopularDepartments from "./herosection/PopularDepartments";
 
 function Explore() {
   return (
@@ -18,6 +19,7 @@ function Explore() {
           <p className="mt-4 max-w-xl font-mono text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
             Select departments and browse shared files. Main directory features are under development.
           </p>
+          <PopularDepartments/>
         </div>
 
         {/* Right Column: Latest Updates Container (Col-span 4) */}
