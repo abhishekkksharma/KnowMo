@@ -6,6 +6,7 @@ const subjectRoutes = require("./routes/subject.route");
 const searchesRoutes = require("./routes/searches.route");
 const resourceRoutes = require("./routes/resource.route");
 const updatesRoute = require("./routes/updates.route");
+const contactRoute = require("./routes/contact.route");
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use("/api/subject",subjectRoutes);
 app.use("/api/search",searchesRoutes);
 app.use("/api/resource", resourceRoutes);
 app.use("/api/updates",updatesRoute);
+app.use("/api/contact",contactRoute);
 
 app.use((req:any, res:any) => {
     res.status(404).json({

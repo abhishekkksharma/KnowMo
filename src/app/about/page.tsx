@@ -3,6 +3,7 @@ import ContentBlock from '../../../components/about/ContentBlock'; // Adjust pat
 import Image from "../../../assets/about/image.png"
 import Image2 from "../../../assets/about/image2.png"
 import Image3 from "../../../assets/about/image3.png"
+import ContactForm from '../../../components/about/ContactForm';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -77,6 +78,7 @@ export default function AboutPage() {
 
           }
         />
+        <ContactForm/>
       </div>
     </main>
   );
