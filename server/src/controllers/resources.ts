@@ -3,7 +3,17 @@ import Subject from "../models/subject.model";
 import Departments from "../models/departments.model";
 import mongoose from "mongoose";
 import { Request, Response } from "express";
-const { createUpdate } = require("../controllers/updates");
+import fs from "fs/promises";
+import { generateByImage } from "../services/gemini/generateByImage";
+import { generateByPrompt } from "../services/gemini/generateByPrompt";
+
+
+const { createUpdate } = require("./updates");
+
+interface MulterRequest extends Request {
+  file?: Express.Multer.File;
+}
+
 
 async function handleAddNewResource(req: Request, res: Response) {
   try {
@@ -46,14 +56,13 @@ async function handleAddNewResource(req: Request, res: Response) {
     if (!subject) {
       return res.status(404).json({ message: "Subject not found" });
     }
-    
+
     // Create update BEFORE saving resource
-await createUpdate(
-  `Resource added for ${subject.name || subject.subjectCode}`,
-  `${type}${customType ? ` (${customType})` : ""} added for ${
-    subject.name || subject.subjectCode
-  }`
-);
+    await createUpdate(
+      `Resource added for ${subject.name || subject.subjectCode}`,
+      `${type}${customType ? ` (${customType})` : ""} added for ${subject.name || subject.subjectCode
+      }`
+    );
 
 
     // Create the resource
@@ -123,7 +132,168 @@ async function handleGetResourcesBySubjectCode(
   }
 }
 
+async function handleGetTestMcqs(req: Request<{ subjectCode: string }>, res: Response) {
+  try {
+    const { subjectCode } = req.params;
+    const count = Number(req.query.count);
+
+    const resource = await Resource.findOne({
+      subjectCode: subjectCode.toUpperCase(),
+      type: "mcqs",
+    }).select("questionBank");
+
+    if (!resource || !resource.questionBank) {
+      return res.status(404).json({
+        success: false,
+        message: "MCQs not found.",
+      });
+    }
+
+    let questions = [...resource.questionBank];
+
+    // Shuffle and return only `count` questions if requested
+    if (!isNaN(count) && count > 0) {
+      questions = questions.sort(() => Math.random() - 0.5).slice(0, count);
+    }
+
+    // Hide correct answers for the test
+    const testQuestions = questions.map((q) => ({
+      question: q.question,
+      options: q.options,
+    }));
+
+    return res.status(200).json({
+      success: true,
+      total: testQuestions.length,
+      data: testQuestions,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+}
+
+async function handleAddMcqs(req: Request, res: Response) {
+  try {
+    const { subjectCode, questions } = req.body;
+
+    if (!subjectCode) {
+      return res.status(400).json({
+        success: false,
+        message: "Subject code is required.",
+      });
+    }
+
+    if (!Array.isArray(questions) || questions.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Questions must be a non-empty array.",
+      });
+    }
+
+    const resource = await Resource.findOneAndUpdate(
+  {
+    subjectCode: subjectCode.toUpperCase(),
+    type: "mcqs",
+  },
+  {
+    $setOnInsert: {
+      title: `${subjectCode.toUpperCase()} MCQs`,
+      departmentCode: req.body.departmentCode,
+      year: req.body.year,
+      type: "mcqs",
+      subjectCode: subjectCode.toUpperCase(),
+    },
+    $push: {
+      questionBank: {
+        $each: questions,
+      },
+    },
+  },
+  {
+    new: true,
+    upsert: true,
+  }
+);
+
+    if (!resource) {
+      return res.status(404).json({
+        success: false,
+        message: "MCQ resource not found for this subject.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `${questions.length} question(s) added successfully.`,
+      totalQuestions: resource.questionBank?.length || 0,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+}
+
+
+async function handleGenerateTest(
+    req: MulterRequest,
+    res: Response
+) {
+    try {
+        const { prompt, numberOfQuestions } = req.body;
+        const image = req.file;
+
+        const totalQuestions = Number(numberOfQuestions) || 20;
+
+        let mcqs;
+
+        if (image) {
+            mcqs = await generateByImage(image.path, totalQuestions);
+
+            // Delete uploaded image after processing
+            await fs.unlink(image.path).catch(() => {});
+        } else if (prompt) {
+            mcqs = await generateByPrompt(prompt, totalQuestions);
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: "Please provide either a syllabus image or a prompt.",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            total: mcqs.length,
+            data: mcqs,
+        });
+    } catch (error) {
+        console.error("Generate Test Error:", error);
+
+        // Clean up uploaded file if an error occurs
+        if (req.file) {
+            await fs.unlink(req.file.path).catch(() => {});
+        }
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to generate MCQs.",
+            error: error instanceof Error ? error.message : "Unknown error",
+        });
+    }
+}
+
 module.exports = {
   handleAddNewResource,
   handleGetResourcesBySubjectCode,
+  handleGetTestMcqs,
+  handleAddMcqs,
+  handleGenerateTest,
 };

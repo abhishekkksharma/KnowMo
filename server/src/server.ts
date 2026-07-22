@@ -1,9 +1,8 @@
 const dotenv = require("dotenv");
+dotenv.config();
+
 const app = require("./app");
 const { connectToMongoDB, syncExistingSubjects } = require("./connectMongo");
-
-
-dotenv.config();
 
 const PORT = Number(process.env.PORT) || 3000;
 const MONGODB_URL:string = process.env.MONGODB_URL as string;
