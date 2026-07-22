@@ -1,15 +1,53 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export interface IMCQ {
+  question: string;
+  options: string[];
+  correctAnswer: string;
+  explanation?: string;
+}
+
 export interface ISubject extends Document {
   name: string;
   departmentCode: string;
   year: number;
   semester?: number;
-  totalSearches:number;
+  totalSearches: number;
   subjectCode: string;
   resourceCount: number;
   resources?: mongoose.Types.ObjectId[];
+  questionBank?: IMCQ[];
 }
+
+const mcqSchema = new Schema<IMCQ>(
+  {
+    question: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    options: {
+      type: [String],
+      required: true,
+      validate: {
+        validator: (v: string[]) => v.length >= 2,
+        message: "At least 2 options are required",
+      },
+    },
+
+    correctAnswer: {
+      type: String,
+      required: true,
+    },
+
+    explanation: {
+      type: String,
+      trim: true,
+    },
+  },
+  { _id: false }
+);
 
 const subjectSchema = new Schema<ISubject>(
   {
@@ -56,6 +94,10 @@ const subjectSchema = new Schema<ISubject>(
         ref: "Resource",
       },
     ],
+    questionBank: {
+      type: [mcqSchema],
+      default: [],
+    },
   },
   {
     timestamps: true,

@@ -6,6 +6,7 @@ import { Request, Response } from "express";
 import fs from "fs/promises";
 import { generateByImage } from "../services/gemini/generateByImage";
 import { generateByPrompt } from "../services/gemini/generateByPrompt";
+import { generateMcqs } from "../services/generateMcqs/generateMcqs";
 
 
 const { createUpdate } = require("./updates");
@@ -137,19 +138,18 @@ async function handleGetTestMcqs(req: Request<{ subjectCode: string }>, res: Res
     const { subjectCode } = req.params;
     const count = Number(req.query.count);
 
-    const resource = await Resource.findOne({
+    const subject = await Subject.findOne({
       subjectCode: subjectCode.toUpperCase(),
-      type: "mcqs",
     }).select("questionBank");
 
-    if (!resource || !resource.questionBank) {
+    if (!subject || !subject.questionBank) {
       return res.status(404).json({
         success: false,
         message: "MCQs not found.",
       });
     }
 
-    let questions = [...resource.questionBank];
+    let questions = [...subject.questionBank];
 
     // Shuffle and return only `count` questions if requested
     if (!isNaN(count) && count > 0) {
@@ -195,42 +195,33 @@ async function handleAddMcqs(req: Request, res: Response) {
       });
     }
 
-    const resource = await Resource.findOneAndUpdate(
-  {
-    subjectCode: subjectCode.toUpperCase(),
-    type: "mcqs",
-  },
-  {
-    $setOnInsert: {
-      title: `${subjectCode.toUpperCase()} MCQs`,
-      departmentCode: req.body.departmentCode,
-      year: req.body.year,
-      type: "mcqs",
-      subjectCode: subjectCode.toUpperCase(),
-    },
-    $push: {
-      questionBank: {
-        $each: questions,
+    const subject = await Subject.findOneAndUpdate(
+      {
+        subjectCode: subjectCode.toUpperCase(),
       },
-    },
-  },
-  {
-    new: true,
-    upsert: true,
-  }
-);
+      {
+        $push: {
+          questionBank: {
+            $each: questions,
+          },
+        },
+      },
+      {
+        new: true,
+      }
+    );
 
-    if (!resource) {
+    if (!subject) {
       return res.status(404).json({
         success: false,
-        message: "MCQ resource not found for this subject.",
+        message: "Subject not found.",
       });
     }
 
     return res.status(200).json({
       success: true,
       message: `${questions.length} question(s) added successfully.`,
-      totalQuestions: resource.questionBank?.length || 0,
+      totalQuestions: subject.questionBank?.length || 0,
     });
   } catch (error) {
     console.error(error);
@@ -244,29 +235,33 @@ async function handleAddMcqs(req: Request, res: Response) {
 
 
 async function handleGenerateTest(
-    req: MulterRequest,
+    req: MulterRequest & Request<{ subjectCode: string }>,
     res: Response
 ) {
     try {
+        const { subjectCode } = req.params;
         const { prompt, numberOfQuestions } = req.body;
         const image = req.file;
 
-        const totalQuestions = Number(numberOfQuestions) || 20;
-
-        let mcqs;
-
-        if (image) {
-            mcqs = await generateByImage(image.path, totalQuestions);
-
-            // Delete uploaded image after processing
-            await fs.unlink(image.path).catch(() => {});
-        } else if (prompt) {
-            mcqs = await generateByPrompt(prompt, totalQuestions);
-        } else {
+        if (!subjectCode?.trim()) {
             return res.status(400).json({
                 success: false,
-                message: "Please provide either a syllabus image or a prompt.",
+                message: "Subject code is required.",
             });
+        }
+
+        const totalQuestions = Number(numberOfQuestions) || 20;
+
+        const mcqs = await generateMcqs({
+            subjectCode: subjectCode as string,
+            numberOfQuestions: totalQuestions,
+            prompt,
+            imagePath: image?.path,
+        });
+
+        // Delete uploaded image after processing
+        if (image) {
+            await fs.unlink(image.path).catch(() => {});
         }
 
         return res.status(200).json({

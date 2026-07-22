@@ -1,12 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-interface IMCQ {
-  question: string;
-  options: string[];
-  correctAnswer: string;
-  explanation?: string;
-}
-
 export interface IResource extends Document {
   title: string;
 
@@ -15,7 +8,6 @@ export interface IResource extends Document {
     | "pyq"
     | "assignment"
     | "lab"
-    | "mcqs"
     | "other";
 
   customType?: string;
@@ -25,41 +17,9 @@ export interface IResource extends Document {
 
   fileUrl?: string;
 
-  questionBank?: IMCQ[];
-
   description?: string;
   uploadedBy?: mongoose.Types.ObjectId;
 }
-
-const mcqSchema = new Schema<IMCQ>(
-  {
-    question: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    options: {
-      type: [String],
-      required: true,
-      validate: {
-        validator: (v: string[]) => v.length >= 2,
-        message: "At least 2 options are required",
-      },
-    },
-
-    correctAnswer: {
-      type: String,
-      required: true,
-    },
-
-    explanation: {
-      type: String,
-      trim: true,
-    },
-  },
-  { _id: false }
-);
 
 const resourceSchema = new Schema<IResource>(
   {
@@ -71,7 +31,7 @@ const resourceSchema = new Schema<IResource>(
 
     type: {
       type: String,
-      enum: ["notes", "pyq", "assignment", "lab", "mcqs", "other"],
+      enum: ["notes", "pyq", "assignment", "lab", "other"],
       required: true,
     },
 
@@ -105,11 +65,6 @@ const resourceSchema = new Schema<IResource>(
     fileUrl: {
       type: String,
       trim: true,
-    },
-
-    questionBank: {
-      type: [mcqSchema],
-      default: [],
     },
 
     description: {
