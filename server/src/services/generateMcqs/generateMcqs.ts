@@ -28,12 +28,10 @@ function shuffle<T>(array: T[]): T[] {
 }
 
 /**
- * Orchestrates MCQ retrieval from the Subject's questionBank:
- * 1. Checks the existing question bank on the Subject document
- * 2. If enough MCQs exist, returns them shuffled (no Gemini call)
- * 3. If not enough, generates the deficit via Gemini (prompt or image)
- * 4. Saves newly generated MCQs to the Subject's questionBank
- * 5. Returns the combined set, shuffled
+ * Orchestrates MCQ generation and storage:
+ * 1. Generates new MCQs via Gemini (prompt or image)
+ * 2. Appends newly generated MCQs to the Subject's questionBank
+ * 3. Returns the newly generated MCQs, shuffled
  */
 export async function generateMcqs({
   subjectCode,
@@ -43,42 +41,29 @@ export async function generateMcqs({
 }: GenerateMcqsParams): Promise<MCQ[]> {
   const upperSubjectCode = subjectCode.trim().toUpperCase();
 
-  // Step 1: Find the subject and check existing question bank
+  // Step 1: Check if subject exists
   const subject = await Subject.findOne({
     subjectCode: upperSubjectCode,
-  }).select("questionBank");
+  }).select("_id"); // just verify existence
 
   if (!subject) {
     throw new Error(`Subject with code '${upperSubjectCode}' not found.`);
   }
 
-  const existingQuestions: MCQ[] = (subject.questionBank as MCQ[] | undefined) ?? [];
-
-  // Step 2: If we have enough, just shuffle and return
-  if (existingQuestions.length >= numberOfQuestions) {
-    return shuffle([...existingQuestions]).slice(0, numberOfQuestions);
-  }
-
-  // Step 3: Not enough — generate the deficit from Gemini
-  const deficit = numberOfQuestions - existingQuestions.length;
-
   if (!prompt && !imagePath) {
-    // No generation source provided — return whatever we have
-    if (existingQuestions.length > 0) {
-      return shuffle([...existingQuestions]);
-    }
-    throw new Error("No existing MCQs found and no prompt or image provided to generate new ones.");
+    throw new Error("No prompt or image provided to generate new MCQs.");
   }
 
+  // Step 2: Generate all requested questions from Gemini
   let generatedMcqs: MCQ[];
 
   if (imagePath) {
-    generatedMcqs = await generateByImage(imagePath, deficit);
+    generatedMcqs = await generateByImage(imagePath, numberOfQuestions);
   } else {
-    generatedMcqs = await generateByPrompt(prompt!, deficit);
+    generatedMcqs = await generateByPrompt(prompt!, numberOfQuestions);
   }
 
-  // Step 4: Save newly generated MCQs to the Subject's questionBank
+  // Step 3: Save newly generated MCQs to the Subject's questionBank (append)
   await Subject.findOneAndUpdate(
     { subjectCode: upperSubjectCode },
     {
@@ -90,7 +75,6 @@ export async function generateMcqs({
     }
   );
 
-  // Step 5: Return combined set, shuffled
-  const combined = [...existingQuestions, ...generatedMcqs];
-  return shuffle(combined).slice(0, numberOfQuestions);
+  // Step 4: Return the newly generated MCQs, shuffled
+  return shuffle(generatedMcqs);
 }
