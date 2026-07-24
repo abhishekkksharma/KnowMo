@@ -14,7 +14,8 @@ import {
   Sparkles,
   Inbox,
   Calendar,
-  Layers
+  Layers,
+  Trophy
 } from "lucide-react";
 import Card from "./ResourceCard";
 
@@ -214,6 +215,25 @@ export default function SubjectPageMain({
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Practice Test CTA */}
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30 p-5 shadow-sm">
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white shadow-sm">
+            <Trophy size={20} />
+          </div>
+          <div>
+            <h3 className="font-bold text-zinc-900 dark:text-white text-base">Practice Test</h3>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">Challenge yourself with auto-generated MCQs</p>
+          </div>
+        </div>
+        <Link
+          href={`/subject/test/${subject.subjectCode}`}
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 w-full sm:w-auto"
+        >
+          Take Test
+        </Link>
       </div>
 
       {/* Content Section */}

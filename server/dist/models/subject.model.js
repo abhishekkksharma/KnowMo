@@ -34,6 +34,29 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
+const mcqSchema = new mongoose_1.Schema({
+    question: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    options: {
+        type: [String],
+        required: true,
+        validate: {
+            validator: (v) => v.length >= 2,
+            message: "At least 2 options are required",
+        },
+    },
+    correctAnswer: {
+        type: String,
+        required: true,
+    },
+    explanation: {
+        type: String,
+        trim: true,
+    },
+}, { _id: false });
 const subjectSchema = new mongoose_1.Schema({
     name: {
         type: String,
@@ -78,6 +101,10 @@ const subjectSchema = new mongoose_1.Schema({
             ref: "Resource",
         },
     ],
+    questionBank: {
+        type: [mcqSchema],
+        default: [],
+    },
 }, {
     timestamps: true,
 });

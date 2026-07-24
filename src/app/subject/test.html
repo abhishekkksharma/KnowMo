@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnowMo. | Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-black: #111111;
+            --accent-pink: #ff0066;
+            --bg-color: #ffffff;
+            --text-gray: #555555;
+            --border-color: #eaeaea;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-black);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Navbar --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 4rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent-pink);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-black);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-active {
+            background-color: var(--primary-black);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* --- Main Content --- */
+        main {
+            flex: 1;
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .test-header {
+            margin-bottom: 3rem;
+        }
+
+        .test-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .test-header p {
+            color: var(--text-gray);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* --- Quiz Container --- */
+        .question-card {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            color: var(--text-gray);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-black);
+            color: var(--primary-black);
+        }
+
+        .option-label input[type="radio"] {
+            margin-top: 0.25rem;
+            accent-color: var(--primary-black);
+        }
+
+        .submit-btn {
+            background-color: var(--primary-black);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            display: block;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* --- Results Styling --- */
+        .explanation {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--primary-black);
+            border-left: 4px solid var(--primary-black);
+        }
+
+        .correct-ans {
+            border-color: #10b981 !important;
+            background-color: #ecfdf5;
+            color: #047857;
+        }
+
+        .wrong-ans {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2;
+            color: #b91c1c;
+        }
+        
+        #score-display {
+            display: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: var(--primary-black);
+            color: white;
+            border-radius: 12px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .footer-desc {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            max-width: 300px;
+            margin-top: 1rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .footer-links h4, .footer-social h4 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-bottom a {
+            color: var(--primary-black);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">KnowMo<span>.</span></div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Departments</a>
+            <a href="#">Explore</a>
+            <a href="#" class="nav-active">Test</a>
+        </nav>
+        <div class="nav-actions">
+            <span>⚙️</span>
+            <div class="search-bar">
+                🔍 Search... <span style="background: #eee; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem;">Ctrl K</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="test-header">
+            <h1 id="test-title">Computer Networks Assessment</h1>
+            <p id="test-meta">Total Questions: 0 | Focus, evaluate, and learn.</p>
+        </div>
+
+        <div id="score-display"></div>
+
+        <form id="quiz-form">
+            <div id="questions-container"></div>
+            <button type="submit" class="submit-btn" id="submit-btn">Submit Test</button>
+        </form>
+    </main>
+
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="logo">KnowMo<span>.</span></div>
+                <p class="footer-desc">Stay informed, discover insights, and keep yourself updated with the latest content.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Departments</a></li>
+                    <li><a href="#">Explore</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Connect</h4>
+                <p>GitHub | LinkedIn | Email</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            Made with ❤️ by <a href="#">Aman Singh</a>
+        </div>
+    </footer>
+
+    <script>
+        // Insert JSON data here
+        const testData = {
+            "success": true,
+            "total": 20,
+            "data": [
+                {
+                    "question": "In a DNS lookup, if a local DNS server makes an iterative query to a root DNS server, what does the root DNS server return if it does not hold the exact IP mapping?",
+                    "options": [
+                        "The final IP address after recursively resolving it on behalf of the client.",
+                        "The IP address of a Top-Level Domain (TLD) DNS server responsible for the domain.",
+                        "An ICMP destination unreachable message.",
+                        "A failure response forcing the client to abort the request."
+                    ],
+                    "correctAnswer": "The IP address of a Top-Level Domain (TLD) DNS server responsible for the domain.",
+                    "explanation": "Iterative queries return referrals to the next authoritative DNS server down the hierarchy rather than performing full resolution themselves."
+                },
+                {
+                    "question": "Why does Active Mode FTP frequently fail when the client is located behind a Network Address Translation (NAT) router or stateful firewall?",
+                    "options": [
+                        "The client fails to establish the initial control connection on TCP port 21.",
+                        "The server initiates the data connection back to a client-specified port, which the firewall blocks as unsolicited inbound traffic.",
+                        "Active mode uses UDP instead of TCP for data transfer, which firewalls automatically drop.",
+                        "The control connection is encrypted, preventing the firewall from reading port numbers."
+                    ],
+                    "correctAnswer": "The server initiates the data connection back to a client-specified port, which the firewall blocks as unsolicited inbound traffic.",
+                    "explanation": "In Active FTP, the server opens the data connection to a port specified by the client, causing client-side firewalls to block the incoming connection."
+                },
+                {
+                    "question": "How does HTTP's conditional GET mechanism using the 'If-Modified-Since' header optimize network bandwidth usage?",
+                    "options": [
+                        "It allows the server to push updated resources before the client explicitly requests them.",
+                        "It returns a '304 Not Modified' status code with an empty response body if the resource hasn't changed.",
+                        "It automatically compresses the HTTP response body using GZIP compression.",
+                        "It bypasses the TCP three-way handshake when fetching cached web pages."
+                    ],
+                    "correctAnswer": "It returns a '304 Not Modified' status code with an empty response body if the resource hasn't changed.",
+                    "explanation": "If the resource is unchanged, the server responds with a 304 code without re-sending the file body, saving network bandwidth."
+                },
+                {
+                    "question": "Why is a pull protocol like POP3 or IMAP required for email retrieval instead of using SMTP end-to-end to the destination client?",
+                    "options": [
+                        "SMTP cannot transport MIME-encoded binary attachments.",
+                        "SMTP requires the destination host to be continuously online to establish a direct TCP connection.",
+                        "POP3 and IMAP provide end-to-end payload encryption that SMTP lacks.",
+                        "SMTP is restricted strictly to local subnet routing."
+                    ],
+                    "correctAnswer": "SMTP requires the destination host to be continuously online to establish a direct TCP connection.",
+                    "explanation": "SMTP is a push protocol assuming active server availability; client devices are often offline, requiring intermediary servers to hold mail until pulled."
+                },
+                {
+                    "question": "During an initial SSH connection, why are users prompted to manually accept and verify the remote server's public key fingerprint?",
+                    "options": [
+                        "To allow the remote host to encrypt the client's local storage drives.",
+                        "To mitigate Man-in-the-Middle (MITM) attacks using a Trust-on-First-Use (TOFU) model without requiring a central CA.",
+                        "To bypass password prompt requirements on all subsequent login attempts.",
+                        "To verify that the client account possesses root administrative privileges."
+                    ],
+                    "correctAnswer": "To mitigate Man-in-the-Middle (MITM) attacks using a Trust-on-First-Use (TOFU) model without requiring a central CA.",
+                    "explanation": "SSH caches host keys on initial trust to detect if an attacker intercepts and substitutes public keys in future connection attempts."
+                },
+                {
+                    "question": "Why do modern secure communication protocols (like TLS or PGP) use asymmetric encryption only for key exchange rather than encrypting entire payloads?",
+                    "options": [
+                        "Asymmetric encryption algorithms are computationally expensive and significantly slower than symmetric algorithms for large payloads.",
+                        "Asymmetric ciphers are mathematically incapable of processing data blocks larger than 2048 bits.",
+                        "Symmetric keys are mathematically immune to brute-force key search attacks.",
+                        "Asymmetric algorithms require continuous connection to a Certificate Authority during decryption."
+                    ],
+                    "correctAnswer": "Asymmetric encryption algorithms are computationally expensive and significantly slower than symmetric algorithms for large payloads.",
+                    "explanation": "Hybrid cryptosystems use fast symmetric ciphers for payload encryption and asymmetric ciphers only to exchange the symmetric session key."
+                },
+                {
+                    "question": "In a digital signature system, why is the signature generated by encrypting the cryptographic hash of a message rather than the full message itself?",
+                    "options": [
+                        "Hashing removes the requirement for receivers to possess the sender's public key.",
+                        "Encrypting a short, fixed-size digest is significantly faster and consumes far less bandwidth than encrypting arbitrary file sizes.",
+                        "Asymmetric private keys cannot process raw unhashed text payloads.",
+                        "Hashing hides the message text from unauthorized eavesdroppers during transport."
+                    ],
+                    "correctAnswer": "Encrypting a short, fixed-size digest is significantly faster and consumes far less bandwidth than encrypting arbitrary file sizes.",
+                    "explanation": "Asymmetric operations are computationally heavy; signing a small fixed-length hash provides non-repudiation efficiently."
+                },
+                {
+                    "question": "What is the key architectural difference in packet encapsulation between IPSec Transport Mode and IPSec Tunnel Mode?",
+                    "options": [
+                        "Transport Mode encrypts only the IP payload, whereas Tunnel Mode encrypts the entire original IP packet including its header.",
+                        "Transport Mode creates site-to-site VPNs, whereas Tunnel Mode creates end-to-end host connections.",
+                        "Transport Mode functions at the Data Link layer, whereas Tunnel Mode functions at the Application layer.",
+                        "Transport Mode prepends an outer IP header, whereas Tunnel Mode preserves the original header without additions."
+                    ],
+                    "correctAnswer": "Transport Mode encrypts only the IP payload, whereas Tunnel Mode encrypts the entire original IP packet including its header.",
+                    "explanation": "Tunnel Mode encapsulates the entire original IP packet inside a brand new IP packet, hiding intermediate routing headers."
+                },
+                {
+                    "question": "An engineer needs to guarantee confidentiality and data integrity for IP traffic. Why is IPSec Authentication Header (AH) insufficient for this task?",
+                    "options": [
+                        "AH does not provide data confidentiality as it lacks encryption capabilities.",
+                        "AH cannot verify message integrity or source authenticity.",
+                        "AH disrupts TCP sequence numbers, breaking transport layer connections.",
+                        "AH is strictly restricted to IPSec Transport Mode deployment."
+                    ],
+                    "correctAnswer": "AH does not provide data confidentiality as it lacks encryption capabilities.",
+                    "explanation": "AH guarantees integrity and authentication, but does not encrypt packet payloads. Encapsulating Security Payload (ESP) is required for confidentiality."
+                },
+                {
+                    "question": "What primary operational advantage does a Stateful Packet Inspection (SPI) firewall offer over a Stateless Packet Filtering firewall?",
+                    "options": [
+                        "SPI firewalls track TCP connection states to dynamically allow returning response traffic for outbound requests.",
+                        "SPI firewalls automatically decrypt TLS traffic to analyze application payloads without performance loss.",
+                        "SPI firewalls operate exclusively at Layer 2 to eliminate ARP spoofing.",
+                        "SPI firewalls inspect application data payloads while ignoring IP addresses and port numbers."
+                    ],
+                    "correctAnswer": "SPI firewalls track TCP connection states to dynamically allow returning response traffic for outbound requests.",
+                    "explanation": "Stateful firewalls maintain connection tables tracking active sessions, allowing inbound packets only if they belong to an established outbound connection."
+                },
+                {
+                    "question": "How does an Application-Level Gateway (Proxy Firewall) differ fundamentally from a Layer 4 Stateful Firewall?",
+                    "options": [
+                        "Proxy firewalls terminate connections from both sides, inspecting Layer 7 application payloads before relaying data.",
+                        "Proxy firewalls process dynamic port routing faster than network-layer stateful filters.",
+                        "Proxy firewalls permit direct IP packet passthrough without inspecting TCP handshakes.",
+                        "Proxy firewalls cannot filter requests based on specific URL paths or HTTP methods."
+                    ],
+                    "correctAnswer": "Proxy firewalls terminate connections from both sides, inspecting Layer 7 application payloads before relaying data.",
+                    "explanation": "Application proxies act as full protocol-aware intermediaries, breaking direct client-server IP connectivity to perform deep Layer 7 inspection."
+                },
+                {
+                    "question": "Unlike central Certificate Authority (CA) hierarchies, how does Pretty Good Privacy (PGP) establish trust for public keys?",
+                    "options": [
+                        "Through a decentralized 'Web of Trust' where users digitally sign each other's public keys.",
+                        "By querying root key mappings directly from DNS system records.",
+                        "By requiring pre-shared symmetric keys for every public key verification.",
+                        "By utilizing IPSec key exchange protocols to distribute trusted certificates."
+                    ],
+                    "correctAnswer": "Through a decentralized 'Web of Trust' where users digitally sign each other's public keys.",
+                    "explanation": "PGP relies on peer-to-peer endorsements where individual users validate and sign keys of trusted contacts to build a Web of Trust."
+                },
+                {
+                    "question": "In PGP operations, when a user selects both message signing and encryption options, what sequence is executed and why?",
+                    "options": [
+                        "Sign first, then encrypt; ensuring the signature is protected from public exposure inside the encrypted payload.",
+                        "Encrypt first, then sign; enabling middleboxes to authenticate senders without decrypting message contents.",
+                        "Compress first, encrypt second, and sign last; preventing signature forgery attacks.",
+                        "Perform both operations simultaneously using a single symmetric session key."
+                    ],
+                    "correctAnswer": "Sign first, then encrypt; ensuring the signature is protected from public exposure inside the encrypted payload.",
+                    "explanation": "PGP signs uncompressed plaintext first and then encrypts both the message and signature, preserving signature integrity and confidentiality."
+                },
+                {
+                    "question": "What security issue occurs if a recursive DNS resolver accepts records containing excessively long Time-To-Live (TTL) values from an untrusted source?",
+                    "options": [
+                        "The resolver becomes vulnerable to prolonged DNS Cache Poisoning, serving bad IP redirects to users.",
+                        "The DNS server crashes immediately due to memory buffer allocation failure.",
+                        "Clients are forced to fall back to non-persistent HTTP modes.",
+                        "Authoritative servers drop recursive resolution privileges for the local domain."
+                    ],
+                    "correctAnswer": "The resolver becomes vulnerable to prolonged DNS Cache Poisoning, serving bad IP redirects to users.",
+                    "explanation": "Long TTLs allow poisoned or malicious DNS mappings to persist in local caches for extended durations, redirecting legitimate traffic."
+                },
+                {
+                    "question": "A web page contains 1 base HTML file and 10 small images. Assuming no packet loss, 1 RTT for TCP handshake, and 1 RTT per HTTP request, how many RTTs are needed under Non-Persistent HTTP without parallel connections?",
+                    "options": [
+                        "2 RTTs",
+                        "11 RTTs",
+                        "22 RTTs",
+                        "12 RTTs"
+                    ],
+                    "correctAnswer": "22 RTTs",
+                    "explanation": "Each of the 11 items requires a dedicated TCP connection (1 RTT handshake + 1 RTT HTTP request/response), resulting in 11 * 2 = 22 RTTs."
+                },
+                {
+                    "question": "What primary limitation of original SMTP led to the introduction of the Multipurpose Internet Mail Extensions (MIME) protocol?",
+                    "options": [
+                        "SMTP could not establish encrypted TLS connections over TCP port 25.",
+                        "SMTP was strictly restricted to transferring standard 7-bit ASCII text data.",
+                        "SMTP could only operate as a pull protocol between clients and servers.",
+                        "SMTP relied on unreliable UDP datagrams for network transport."
+                    ],
+                    "correctAnswer": "SMTP was strictly restricted to transferring standard 7-bit ASCII text data.",
+                    "explanation": "MIME encodes non-ASCII data, binary files, and rich media content into 7-bit ASCII format suitable for legacy SMTP transport."
+                },
+                {
+                    "question": "How does adding a timestamp or cryptographic nonce to a digitally signed challenge protect against Replay Attacks?",
+                    "options": [
+                        "It forces the public key to regenerate after every transmission.",
+                        "It ensures that a captured signature cannot be successfully re-sent by an attacker in a later session.",
+                        "It reduces the bit length of the hash digest to speed up verification.",
+                        "It converts the digital signature into a symmetric cipher."
+                    ],
+                    "correctAnswer": "It guarantees that a captured valid signature cannot be reused by an attacker in a subsequent session because the freshness parameter changes.",
+                    "explanation": "Nonces and timestamps ensure message freshness; replayed signatures fail verification because the freshness value is outdated or repeated."
+                },
+                {
+                    "question": "User A wants to send a message to User B providing BOTH confidentiality (only B can read it) AND authenticity (proof it came from A). How should key operations be ordered?",
+                    "options": [
+                        "Sign with User A's private key, then encrypt with User B's public key.",
+                        "Encrypt with User B's private key, then sign with User A's public key.",
+                        "Encrypt with User A's public key, then sign with User B's private key.",
+                        "Encrypt with User B's public key, then sign with User B's private key."
+                    ],
+                    "correctAnswer": "Sign with User A's private key, then encrypt with User B's public key.",
+                    "explanation": "Signing with A's private key proves authenticity, while encrypting with B's public key guarantees that only B can decrypt and view the contents."
+                },
+                {
+                    "question": "Which statement accurately describes the architectural relationship between HTTP and Uniform Resource Identifiers (URIs)?",
+                    "options": [
+                        "HTTP uses URIs as standard targets to address resources, independent of how servers generate or store them.",
+                        "URIs encrypt HTTP headers to prevent third-party tracking of web requests.",
+                        "HTTP forces URIs to map directly to absolute physical storage paths on the server.",
+                        "URIs are protocol-bound strings that function exclusively within HTTP systems."
+                    ],
+                    "correctAnswer": "HTTP uses URIs as standard targets to address resources, independent of how servers generate or store them.",
+                    "explanation": "URIs provide an abstract, protocol-independent identification layer that HTTP uses to request targets regardless of back-end storage mechanisms."
+                },
+                {
+                    "question": "What is the primary function of an IPSec Security Association (SA)?",
+                    "options": [
+                        "It represents a unidirectional logical connection defining specific cryptographic algorithms, keys, and parameters for traffic exchange.",
+                        "It acts as a bidirectional encrypted tunnel managed by a central Certificate Authority.",
+                        "It serves as an application proxy filtering bad HTTP and FTP commands.",
+                        "It dynamically manages public IP address allocations for remote VPN clients."
+                    ],
+                    "correctAnswer": "It represents a unidirectional logical connection defining specific cryptographic algorithms, keys, and parameters for traffic exchange.",
+                    "explanation": "An IPSec SA is a one-way connection defining the negotiated security parameters (algorithms, keys, SPI) between two communicating peers."
+                }
+            ]
+        };
+
+        const container = document.getElementById('questions-container');
+        document.getElementById('test-meta').innerText = `Total Questions: ${testData.total} | Focus, evaluate, and learn.`;
+
+        // Render Questions
+        testData.data.forEach((item, index) => {
+            const qCard = document.createElement('div');
+            qCard.className = 'question-card';
+            qCard.id = `question-${index}`;
+
+            const qTitle = document.createElement('h3');
+            qTitle.className = 'question-title';
+            qTitle.innerText = `${index + 1}. ${item.question}`;
+            qCard.appendChild(qTitle);
+
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options-list';
+
+            item.options.forEach((opt, optIndex) => {
+                const li = document.createElement('li');
+                const label = document.createElement('label');
+                label.className = 'option-label';
+                label.id = `label-${index}-${optIndex}`;
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q${index}`;
+                radio.value = opt;
+
+                const text = document.createTextNode(opt);
+
+                label.appendChild(radio);
+                label.appendChild(text);
+                li.appendChild(label);
+                optionsList.appendChild(li);
+            });
+
+            qCard.appendChild(optionsList);
+
+            // Explanation box (hidden initially)
+            const explanation = document.createElement('div');
+            explanation.className = 'explanation';
+            explanation.id = `exp-${index}`;
+            explanation.innerHTML = `<strong>Explanation:</strong> ${item.explanation}`;
+            qCard.appendChild(explanation);
+
+            container.appendChild(qCard);
+        });
+
+        // Handle Submission
+        document.getElementById('quiz-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let score = 0;
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.style.display = 'none'; // Hide button after submit
+
+            testData.data.forEach((item, index) => {
+                const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                const explanationBox = document.getElementById(`exp-${index}`);
+                explanationBox.style.display = 'block';
+                
+                // Helper to check answers (handles slight string mismatches in JSON if any)
+                const isCorrect = selectedOption && (selectedOption.value === item.correctAnswer || item.correctAnswer.includes(selectedOption.value) || selectedOption.value.includes(item.correctAnswer.substring(0, 50)));
+
+                if (isCorrect) {
+                    score++;
+                }
+
+                // Highlight UI
+                item.options.forEach((opt, optIndex) => {
+                    const label = document.getElementById(`label-${index}-${optIndex}`);
+                    const radio = label.querySelector('input');
+                    
+                    // Disable all radios
+                    radio.disabled = true;
+
+                    const optionIsCorrect = (opt === item.correctAnswer || item.correctAnswer.includes(opt) || opt.includes(item.correctAnswer.substring(0, 50)));
+
+                    if (optionIsCorrect) {
+                        label.classList.add('correct-ans');
+                    } else if (radio.checked && !optionIsCorrect) {
+                        label.classList.add('wrong-ans');
+                    }
+                });
+            });
+
+            // Display Score
+            const scoreDisplay = document.getElementById('score-display');
+            scoreDisplay.style.display = 'block';
+            scoreDisplay.innerText = `You scored ${score} out of ${testData.total}!`;
+            
+            // Scroll to top to see score
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

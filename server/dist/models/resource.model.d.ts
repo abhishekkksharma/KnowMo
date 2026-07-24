@@ -1,12 +1,12 @@
 import mongoose, { Document } from "mongoose";
 export interface IResource extends Document {
     title: string;
-    type: "notes" | "pyq" | "test" | "mcqs" | "other";
+    type: "notes" | "pyq" | "assignment" | "lab" | "other";
     customType?: string;
     departmentCode: string;
     year: number;
     subjectCode: string;
-    fileUrl: string;
+    fileUrl?: string;
     description?: string;
     uploadedBy?: mongoose.Types.ObjectId;
 }

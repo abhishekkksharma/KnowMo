@@ -60,7 +60,7 @@ const resourceSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
         min: 1,
-        max: 4, // adjust if needed
+        max: 4,
     },
     subjectCode: {
         type: String,
@@ -70,7 +70,6 @@ const resourceSchema = new mongoose_1.Schema({
     },
     fileUrl: {
         type: String,
-        required: true,
         trim: true,
     },
     description: {

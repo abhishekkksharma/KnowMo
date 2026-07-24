@@ -1,4 +1,10 @@
 import mongoose, { Document } from "mongoose";
+export interface IMCQ {
+    question: string;
+    options: string[];
+    correctAnswer: string;
+    explanation?: string;
+}
 export interface ISubject extends Document {
     name: string;
     departmentCode: string;
@@ -8,6 +14,7 @@ export interface ISubject extends Document {
     subjectCode: string;
     resourceCount: number;
     resources?: mongoose.Types.ObjectId[];
+    questionBank?: IMCQ[];
 }
 declare const Subject: mongoose.Model<ISubject, {}, {}, {}, mongoose.Document<unknown, {}, ISubject, {}, mongoose.DefaultSchemaOptions> & ISubject & Required<{
     _id: mongoose.Types.ObjectId;

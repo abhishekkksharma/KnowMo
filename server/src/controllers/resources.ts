@@ -156,10 +156,11 @@ async function handleGetTestMcqs(req: Request<{ subjectCode: string }>, res: Res
       questions = questions.sort(() => Math.random() - 0.5).slice(0, count);
     }
 
-    // Hide correct answers for the test
     const testQuestions = questions.map((q) => ({
       question: q.question,
       options: q.options,
+      correctAnswer: q.correctAnswer,
+      explanation: q.explanation,
     }));
 
     return res.status(200).json({
