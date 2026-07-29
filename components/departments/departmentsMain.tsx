@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import DepartmentCard from "./departmentCard";
 import { Search } from "lucide-react";
+import RequestForm from "../RequestForm";
 
 interface Department {
   _id: string;
@@ -166,6 +167,22 @@ function DepartmentMain() {
           </p>
         </div>
       )}
+      <div className="mt-16 mb-12 flex justify-center px-4">
+  <div className="w-full max-w-2xl">
+    <div className="mb-8 text-center">
+      <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Can't find your department?
+      </h2>
+
+      <p className="mt-3 text-base leading-relaxed text-gray-600 dark:text-gray-400">
+        Request a new department by providing its name and degree duration.
+        Our team will review your request and make it available if approved.
+      </p>
+    </div>
+
+    <RequestForm type="Department" />
+  </div>
+</div>
     </section>
   );
 }

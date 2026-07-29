@@ -130,7 +130,7 @@ export default function TestPageMain({ questions, subjectCode, subjectName, erro
   return (
     <main className="mx-auto max-w-4xl px-6 py-12 md:py-20 min-h-[70vh]">
       {/* Logo */}
-      <div className="mb-10">
+      {/* <div className="mb-10">
         <Link
           href="https://knowmo.vercel.app/"
           target="_blank"
@@ -145,7 +145,7 @@ export default function TestPageMain({ questions, subjectCode, subjectName, erro
             <span className="text-pink-600">.</span>
           </h1>
         </Link>
-      </div>
+      </div> */}
 
       {/* Header */}
       <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">

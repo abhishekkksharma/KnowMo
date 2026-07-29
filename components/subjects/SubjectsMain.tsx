@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import SubjectCard from "./subjectCard";
 import { Search, LayoutGrid, LayoutList } from "lucide-react";
+import RequestForm from "../RequestForm";
 
 interface Subject {
     _id: string;
@@ -237,6 +238,22 @@ export default function SubjectMain({
                     )
                 )}
             </div>
+            <div className="mt-16 mb-12 flex justify-center px-4">
+  <div className="w-full max-w-2xl">
+    <div className="mb-8 text-center">
+      <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Can't find your subject?
+      </h2>
+
+      <p className="mt-3 text-base leading-relaxed text-gray-600 dark:text-gray-400">
+        If the subject you're looking for isn't available, submit a request below.
+        We'll review it and add it if it meets the curriculum requirements.
+      </p>
+    </div>
+
+    <RequestForm type="Subject" />
+  </div>
+</div>
         </section>
     );
 }
