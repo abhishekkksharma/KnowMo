@@ -87,7 +87,7 @@ function ContactForm() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.05 }}
                                 type="text"
-                                placeholder="Name (Optional)"
+                                placeholder="Name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 className="w-full rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-black px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 outline-none transition-all duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"

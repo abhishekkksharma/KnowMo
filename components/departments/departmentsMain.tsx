@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import DepartmentCard from "./departmentCard";
 import { Search } from "lucide-react";
 import RequestForm from "../RequestForm";
+import ServerError from "../ServerError";
 
 interface Department {
   _id: string;
@@ -60,7 +61,8 @@ function DepartmentMain() {
   if (error) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center font-mono text-sm">
-        <p className="text-red-500 dark:text-red-400">{error}</p>
+        {/* <p className="text-red-500 dark:text-red-400">{error}</p> */}
+        <ServerError/>
       </div>
     );
   }
