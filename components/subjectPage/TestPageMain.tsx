@@ -275,35 +275,98 @@ export default function TestPageMain({ questions, subjectCode, subjectName, erro
       </div>
 
       {/* Pagination UI from user's image request */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 mt-12 mb-8">
-          <div className="flex items-center gap-4 bg-zinc-200/50 dark:bg-zinc-800/50 p-1.5 rounded-full">
-            <button 
-              disabled={currentPage === 1}
+{totalPages > 1 && (
+  <div className="flex items-center justify-center gap-2 mt-12 mb-8 flex-wrap">
+    <div className="flex items-center gap-2 bg-zinc-200/50 dark:bg-zinc-800/50 p-1.5 rounded-full">
+
+      {/* Previous Button */}
+      <button
+        disabled={currentPage === 1}
+        onClick={() => {
+          setCurrentPage((p) => p - 1);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
+        className="p-2 rounded-full bg-white dark:bg-zinc-700 shadow-sm text-zinc-900 dark:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center w-10 h-10"
+        aria-label="Previous page"
+      >
+        <ArrowLeft size={18} />
+      </button>
+
+      {/* Page Numbers */}
+      {(() => {
+        const pages: (number | string)[] = [];
+
+        if (totalPages <= 7) {
+          for (let i = 1; i <= totalPages; i++) {
+            pages.push(i);
+          }
+        } else {
+          pages.push(1);
+
+          if (currentPage > 3) {
+            pages.push("...");
+          }
+
+          const start = Math.max(2, currentPage - 1);
+          const end = Math.min(totalPages - 1, currentPage + 1);
+
+          for (let i = start; i <= end; i++) {
+            pages.push(i);
+          }
+
+          if (currentPage < totalPages - 2) {
+            pages.push("...");
+          }
+
+          pages.push(totalPages);
+        }
+
+        return pages.map((page, index) =>
+          typeof page === "number" ? (
+            <button
+              key={page}
               onClick={() => {
-                setCurrentPage(p => p - 1);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setCurrentPage(page);
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="p-2 rounded-full bg-white dark:bg-zinc-700 shadow-sm text-zinc-900 dark:text-white disabled:opacity-50 disabled:shadow-none transition-all flex items-center justify-center w-10 h-10"
+              aria-label={`Go to page ${page}`}
+              aria-current={currentPage === page ? "page" : undefined}
+              className={`w-10 h-10 rounded-full text-sm font-semibold flex items-center justify-center transition-all ${
+                currentPage === page
+                  ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-md"
+                  : "text-zinc-700 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-700"
+              }`}
             >
-              <ArrowLeft size={18} />
+              {page}
             </button>
-            <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 px-2">
-              {currentPage} of {totalPages}
+          ) : (
+            <span
+              key={`ellipsis-${index}`}
+              className="w-6 text-center text-zinc-500 dark:text-zinc-400 select-none"
+            >
+              ...
             </span>
-            <button 
-              disabled={currentPage === totalPages}
-              onClick={() => {
-                setCurrentPage(p => p + 1);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="p-2 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-sm disabled:opacity-50 transition-all flex items-center justify-center w-10 h-10"
-            >
-              <ArrowRight size={18} />
-            </button>
-          </div>
-        </div>
-      )}
+          )
+        );
+      })()}
+
+      {/* Next Button */}
+      <button
+        disabled={currentPage === totalPages}
+        onClick={() => {
+          setCurrentPage((p) => p + 1);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
+        className="p-2 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-sm disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center w-10 h-10"
+        aria-label="Next page"
+      >
+        <ArrowRight size={18} />
+      </button>
+
+    </div>
+  </div>
+)}
+
       
       {/* Download Test Button (Below Pagination) */}
       <div className="mt-8 flex justify-center">
