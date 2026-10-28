@@ -1,10 +1,10 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Navbar from "../../components/headers/Navbar";
 import "./globals.css";
-import { ThemeProvider } from "../../components/ui/theme-provider"
-import Footer from "../../components/footer/footer";
+import { ThemeProvider } from "../../components/ui/theme-provider";
 import Providers from "./provider";
+import LayoutContent from "../../components/layout/LayoutContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,13 +16,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: {
     default: "KnowMo",
     template: "KnowMo | %s",
   },
   description: "KnowMo",
-}
+};
 
 export default function RootLayout({
   children,
@@ -31,12 +31,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeProvider>
           <Providers>
-            <Navbar />
-            {children}
-            <Footer />
+            <LayoutContent>{children}</LayoutContent>
           </Providers>
         </ThemeProvider>
       </body>

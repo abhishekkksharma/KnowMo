@@ -1,5 +1,5 @@
 import { Router } from "express";
-const {handleUserSignup} = require("../controllers/user")
+const { handleUserSignup, handleSignIn, handleGetMe } = require("../controllers/user");
 
 const router = Router();
 
@@ -9,7 +9,9 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/signup",handleUserSignup);
+router.post("/signup", handleUserSignup);
+router.post("/login", handleSignIn);
+router.get("/me", handleGetMe);
 
 
 module.exports = router;

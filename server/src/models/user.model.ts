@@ -4,11 +4,11 @@ export interface IUser extends Document {
   name: string;
   email: string;
 
-  department: string;      
-  departmentCode: string;   
+  department?: string;      
+  departmentCode?: string;   
 
-  currentYear: number;
-  credits: number;
+  currentYear?: number;
+  credits?: number;
 
   password: string;
 
@@ -77,7 +77,6 @@ const userSchema = new Schema<IUser>(
   }
 );
 
-// userSchema.index({ departmentCode: 1 });
 
 const User = mongoose.model<IUser>("User", userSchema);
 
