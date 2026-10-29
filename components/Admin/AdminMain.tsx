@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { BookOpen, Building2, FilePlus2, ClipboardCheck, ArrowUpRight } from "lucide-react";
 import { useAdminAuth } from "./AdminAuthContext";
+import Requests from "./Requests";
+import MappedRequests from "./MappedRequests";
 
 const adminModules = [
   {
@@ -44,7 +46,8 @@ export default function AdminMain() {
   const { user } = useAdminAuth();
 
   return (
-    <>
-    </>
+    <section className="m-18 p-6">
+      <MappedRequests/>
+    </section>
   );
 }
