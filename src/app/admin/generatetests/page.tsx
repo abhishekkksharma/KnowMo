@@ -1,8 +1,11 @@
 import React from 'react'
+import GenerateTest from '../../../../components/Admin/GenerateTests/GenerateTest'
 
 function page() {
   return (
-    <div>page</div>
+    <div className='m-18'>
+      <GenerateTest/>
+    </div>
   )
 }
 

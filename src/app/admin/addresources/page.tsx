@@ -1,9 +1,9 @@
-import React from 'react'
+import { AddResourceForm } from '../../../../components/Admin/AddResources/AddResourceForm'
 
-function page() {
+export default function AddResourcesPage() {
   return (
-    <div>page</div>
+    <div className="m-18">
+      <AddResourceForm />
+    </div>
   )
 }
-
-export default page
