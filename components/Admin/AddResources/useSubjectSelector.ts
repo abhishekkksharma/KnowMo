@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL || "http://localhost:5000/api";
+const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL+'/api' || 'http://localhost:5000/api';
 
 export interface Department {
   _id: string;

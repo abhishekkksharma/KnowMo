@@ -11,7 +11,7 @@ import {
 import { SubjectSelector } from "./SubjectSelector";
 import { useSubjectSelector } from "./useSubjectSelector";
 
-const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL || "http://localhost:5000/api";
+const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL+'/api' || 'http://localhost:5000/api';
 
 const RESOURCE_TYPES = [
   { value: "notes", label: "Notes" },

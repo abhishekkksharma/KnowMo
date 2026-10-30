@@ -3,7 +3,7 @@
 import { Loader2, Sparkles, MessageSquareText, ChevronDown, CheckCircle2, AlertCircle } from 'lucide-react';
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
-const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL || 'http://localhost:5000/api';
+const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL+'/api' || 'http://localhost:5000/api';
 
 interface Department {
     _id: string;
