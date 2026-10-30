@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const API_BASE = "http://localhost:5000/api";
+const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL || "http://localhost:5000/api";
 
 export interface Department {
   _id: string;
@@ -29,7 +29,7 @@ export function useSubjectSelector() {
 
   // Fetch departments once
   useEffect(() => {
-    fetch(`${API_BASE}/department`)
+    fetch(`${NEXT_PUBLIC_CLIENT_BASE_URL}/department`)
       .then((r) => r.json())
       .then((d) => setDepartments(Array.isArray(d) ? d : []))
       .catch(() => setDepartments([]))
@@ -44,7 +44,7 @@ export function useSubjectSelector() {
     }
     setLoadingSubjects(true);
     setSelectedSubjectCode("");
-    fetch(`${API_BASE}/subject/${selectedDept.departmentCode}`)
+    fetch(`${NEXT_PUBLIC_CLIENT_BASE_URL}/subject/${selectedDept.departmentCode}`)
       .then((r) => r.json())
       .then((d) => setSubjects(Array.isArray(d.subjects) ? d.subjects : []))
       .catch(() => setSubjects([]))

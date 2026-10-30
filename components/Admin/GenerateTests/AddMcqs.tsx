@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 
-const API_BASE = "http://localhost:5000/api";
+const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL || "http://localhost:5000/api";
 
 const DEFAULT_JSON = `[
   {
@@ -57,7 +57,7 @@ function AddMcqs() {
   useEffect(() => {
     async function fetchDepartments() {
       try {
-        const res = await fetch(`${API_BASE}/department`);
+        const res = await fetch(`${NEXT_PUBLIC_CLIENT_BASE_URL}/department`);
         const data = await res.json();
         setDepartments(Array.isArray(data) ? data : []);
       } catch {
@@ -79,7 +79,7 @@ function AddMcqs() {
     setSubjectCode("");
     async function fetchSubjects() {
       try {
-        const res = await fetch(`${API_BASE}/subject/${departmentCode}`);
+        const res = await fetch(`${NEXT_PUBLIC_CLIENT_BASE_URL}/subject/${departmentCode}`);
         const data = await res.json();
         setSubjects(Array.isArray(data.subjects) ? data.subjects : []);
       } catch {
@@ -145,7 +145,7 @@ function AddMcqs() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE}/resource/mcqs`, {
+      const response = await fetch(`${NEXT_PUBLIC_CLIENT_BASE_URL}/resource/mcqs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -3,7 +3,7 @@
 import { ImagePlus, Loader2, Upload, ChevronDown, CheckCircle2, AlertCircle } from 'lucide-react';
 import React, { useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
 
-const API_BASE = 'http://localhost:5000/api';
+const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL || 'http://localhost:5000/api';
 
 interface Department {
     _id: string;
@@ -53,7 +53,7 @@ function GenerateByImage() {
     useEffect(() => {
         async function fetchDepartments() {
             try {
-                const res = await fetch(`${API_BASE}/department`);
+                const res = await fetch(`${NEXT_PUBLIC_CLIENT_BASE_URL}/department`);
                 const data = await res.json();
                 setDepartments(Array.isArray(data) ? data : []);
             } catch {
@@ -75,7 +75,7 @@ function GenerateByImage() {
         setSubjectCode('');
         async function fetchSubjects() {
             try {
-                const res = await fetch(`${API_BASE}/subject/${departmentCode}`);
+                const res = await fetch(`${NEXT_PUBLIC_CLIENT_BASE_URL}/subject/${departmentCode}`);
                 const data = await res.json();
                 setSubjects(Array.isArray(data.subjects) ? data.subjects : []);
             } catch {
@@ -124,7 +124,7 @@ function GenerateByImage() {
             formData.append('image', imageFile);
             formData.append('numberOfQuestions', numberOfQuestions);
 
-            const response = await fetch(`${API_BASE}/resource/test/mcqs/${subjectCode}`, {
+            const response = await fetch(`${NEXT_PUBLIC_CLIENT_BASE_URL}/resource/test/mcqs/${subjectCode}`, {
                 method: 'POST',
                 body: formData,
             });
