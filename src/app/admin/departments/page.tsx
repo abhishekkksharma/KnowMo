@@ -1,8 +1,11 @@
 import React from 'react'
+import AdminDepartmets from '../../../../components/Admin/AdminDepartments/AdminDepartmets'
 
 function page() {
   return (
-    <div>page</div>
+    <div className=''>
+      <AdminDepartmets/>
+    </div>
   )
 }
 

@@ -46,7 +46,7 @@ export default function AdminMain() {
   const { user } = useAdminAuth();
 
   return (
-    <section className="m-18 p-6">
+    <section className="lg:m-18 p-6">
       <MappedRequests/>
     </section>
   );

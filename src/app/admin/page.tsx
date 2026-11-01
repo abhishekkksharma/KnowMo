@@ -4,7 +4,7 @@ export default function AdminPage() {
     
   return (
     <>
-        <AdminMain />
+      <AdminMain />
     </>
   )
 }

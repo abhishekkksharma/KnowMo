@@ -2,7 +2,7 @@ import { AddResourceForm } from '../../../../components/Admin/AddResources/AddRe
 
 export default function AddResourcesPage() {
   return (
-    <div className="m-18">
+    <div className="py-18 lg:py-0 lg:m-18">
       <AddResourceForm />
     </div>
   )
