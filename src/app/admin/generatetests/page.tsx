@@ -3,8 +3,8 @@ import GenerateTest from '../../../../components/Admin/GenerateTests/GenerateTes
 
 function page() {
   return (
-    <div className='py-18 lg:py-0 lg:m-18'>
-      <GenerateTest/>
+    <div className="pt-24 pb-16 px-3 sm:px-6 max-w-6xl mx-auto w-full">
+      <GenerateTest />
     </div>
   )
 }

@@ -292,7 +292,7 @@ export default function AdminSubjects() {
   });
 
   return (
-    <div className="flex flex-col gap-5 pt-10 px-4 sm:px-10 lg:px-18 m-18 font-mono">
+    <div className="flex flex-col gap-5 pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full font-mono">
       {successMsg && (
         <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-400">
           <CheckCircle2 size={16} className="shrink-0" />
@@ -301,9 +301,10 @@ export default function AdminSubjects() {
       )}
 
       {/* Search + Actions bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 py-2">
-        <div className="flex flex-wrap items-center gap-2 flex-1">
-          <div className="flex flex-1 min-w-52 max-w-sm items-center rounded-full border border-zinc-200 bg-white px-4 py-2 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 py-2">
+        <div className="flex flex-1 flex-col sm:flex-row items-stretch sm:items-center gap-2">
+          {/* Search box */}
+          <div className="flex flex-1 items-center rounded-full border border-zinc-200 bg-white px-4 py-2 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
             <Search className="text-zinc-400 shrink-0" size={16} />
             <input
               className="ml-3 w-full bg-transparent text-sm outline-none placeholder:text-zinc-400 dark:text-zinc-100"
@@ -325,7 +326,7 @@ export default function AdminSubjects() {
           <select
             value={selectedDeptFilter}
             onChange={(e) => setSelectedDeptFilter(e.target.value)}
-            className="rounded-full border border-zinc-200 bg-white px-3 py-2 text-xs font-medium text-zinc-700 outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 cursor-pointer"
+            className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-xs font-medium text-zinc-700 outline-none dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 cursor-pointer w-full sm:w-auto"
           >
             <option value="ALL">All Departments</option>
             {departments.map((d) => (
@@ -336,17 +337,18 @@ export default function AdminSubjects() {
           </select>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* Buttons */}
+        <div className="flex items-center justify-between sm:justify-end gap-2">
           <button
             onClick={fetchData}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 shrink-0"
             title="Refresh"
           >
             <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
           </button>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+            className="flex items-center gap-2 rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200 whitespace-nowrap"
           >
             <Plus size={15} />
             Add Subject
@@ -368,18 +370,18 @@ export default function AdminSubjects() {
       )}
 
       {/* Table */}
-      <div className="w-full overflow-x-auto rounded-xl border border-zinc-200 shadow-sm dark:border-zinc-800">
-        <table className="w-full text-left border-collapse text-sm">
+      <div className="w-full overflow-x-auto rounded-2xl border border-zinc-200 shadow-sm dark:border-zinc-800">
+        <table className="w-full min-w-[760px] text-left border-collapse text-sm">
           <thead className="bg-zinc-50 dark:bg-zinc-900/60">
             <tr className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-              <th className="px-5 py-3.5 font-semibold">Subject</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Code</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Department</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Year</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Semester</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Resources</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Searches</th>
-              <th className="px-5 py-3.5 font-semibold text-right">Actions</th>
+              <th className="px-5 py-3.5 font-semibold whitespace-nowrap">Subject</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Code</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Department</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Year</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Semester</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Resources</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Searches</th>
+              <th className="px-5 py-3.5 font-semibold text-right whitespace-nowrap">Actions</th>
             </tr>
           </thead>
 
@@ -402,32 +404,32 @@ export default function AdminSubjects() {
                 onClick={() => router.push(`/admin/subjects/view?id=${sub._id}`)}
                 className="border-t border-zinc-100 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/40 transition-colors cursor-pointer group"
               >
-                <td className="px-5 py-4 font-medium text-zinc-800 dark:text-zinc-100 group-hover:text-black dark:group-hover:text-white">
+                <td className="px-5 py-4 font-medium text-zinc-800 dark:text-zinc-100 group-hover:text-black dark:group-hover:text-white min-w-[200px]">
                   {sub.name}
                 </td>
-                <td className="px-5 py-4 text-center">
+                <td className="px-5 py-4 text-center whitespace-nowrap">
                   <span className="rounded-md bg-zinc-100 px-2 py-0.5 font-mono text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
                     {sub.subjectCode}
                   </span>
                 </td>
-                <td className="px-5 py-4 text-center">
+                <td className="px-5 py-4 text-center whitespace-nowrap">
                   <span className="rounded-md bg-blue-50 px-2 py-0.5 font-mono text-xs text-blue-700 dark:bg-blue-950/40 dark:text-blue-300">
                     {sub.departmentCode}
                   </span>
                 </td>
-                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400">
+                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400 whitespace-nowrap">
                   Year {sub.year}
                 </td>
-                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400">
+                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400 whitespace-nowrap">
                   Sem {sub.semester || "-"}
                 </td>
-                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400">
+                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400 whitespace-nowrap">
                   {sub.resourceCount ?? 0}
                 </td>
-                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400">
+                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400 whitespace-nowrap">
                   {sub.totalSearches ?? 0}
                 </td>
-                <td className="px-5 py-4 text-right">
+                <td className="px-5 py-4 text-right whitespace-nowrap">
                   <div className="inline-flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                     <Link
                       href={`/admin/subjects/view?id=${sub._id}`}
@@ -480,4 +482,3 @@ export default function AdminSubjects() {
     </div>
   );
 }
-

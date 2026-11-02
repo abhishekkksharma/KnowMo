@@ -255,7 +255,7 @@ function AdminDepartmets() {
   );
 
   return (
-    <div className="flex flex-col gap-5 lg:pt-10 pt-24 px-4 sm:px-10 lg:px-18 lg:m-18 font-mono">
+    <div className="flex flex-col gap-5 pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full font-mono">
 
       {/* Success toast */}
       {successMsg && (
@@ -266,9 +266,9 @@ function AdminDepartmets() {
       )}
 
       {/* Search + Actions bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 py-2">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 py-2">
         {/* Search */}
-        <div className="flex flex-1 min-w-52 max-w-sm items-center rounded-full border border-zinc-200 bg-white px-4 py-2 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="flex flex-1 items-center rounded-full border border-zinc-200 bg-white px-4 py-2 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
           <Search className="text-zinc-400 shrink-0" size={16} />
           <input
             className="ml-3 w-full bg-transparent text-sm outline-none placeholder:text-zinc-400 dark:text-zinc-100"
@@ -287,17 +287,17 @@ function AdminDepartmets() {
         </div>
 
         {/* Right-side buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between sm:justify-end gap-2">
           <button
             onClick={fetchDepartments}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 shrink-0"
             title="Refresh"
           >
             <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
           </button>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+            className="flex items-center gap-2 rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200 whitespace-nowrap"
           >
             <Plus size={15} />
             Add New
@@ -321,18 +321,18 @@ function AdminDepartmets() {
       )}
 
       {/* Table */}
-      <div className="w-full overflow-x-auto rounded-xl border border-zinc-200 shadow-sm dark:border-zinc-800">
-        <table className="w-full text-left border-collapse text-sm">
+      <div className="w-full overflow-x-auto rounded-2xl border border-zinc-200 shadow-sm dark:border-zinc-800">
+        <table className="w-full min-w-[760px] text-left border-collapse text-sm">
           <thead className="bg-zinc-50 dark:bg-zinc-900/60">
             <tr className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-              <th className="px-5 py-3.5 font-semibold">Department</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Code</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Duration</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Subjects</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Resources</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Searches</th>
-              <th className="px-5 py-3.5 font-semibold text-center">Status</th>
-              <th className="px-5 py-3.5 font-semibold text-right">Actions</th>
+              <th className="px-5 py-3.5 font-semibold whitespace-nowrap">Department</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Code</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Duration</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Subjects</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Resources</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Searches</th>
+              <th className="px-5 py-3.5 font-semibold text-center whitespace-nowrap">Status</th>
+              <th className="px-5 py-3.5 font-semibold text-right whitespace-nowrap">Actions</th>
             </tr>
           </thead>
 
@@ -357,27 +357,27 @@ function AdminDepartmets() {
                 onClick={() => router.push(`/admin/departments/view?id=${dept._id}`)}
                 className="border-t border-zinc-100 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/40 transition-colors cursor-pointer group"
               >
-                <td className="px-5 py-4 font-medium text-zinc-800 dark:text-zinc-100 group-hover:text-black dark:group-hover:text-white">
+                <td className="px-5 py-4 font-medium text-zinc-800 dark:text-zinc-100 group-hover:text-black dark:group-hover:text-white min-w-[200px]">
                   {dept.name}
                 </td>
-                <td className="px-5 py-4 text-center">
+                <td className="px-5 py-4 text-center whitespace-nowrap">
                   <span className="rounded-md bg-zinc-100 px-2 py-0.5 font-mono text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
                     {dept.departmentCode}
                   </span>
                 </td>
-                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400">
+                <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400 whitespace-nowrap">
                   {dept.yearsOfDegree} yr{dept.yearsOfDegree !== 1 ? "s" : ""}
                 </td>
-                <td className="px-5 py-4 text-center">
+                <td className="px-5 py-4 text-center whitespace-nowrap">
                   <Pill value={dept.totalSubjects ?? 0} label="subjects" />
                 </td>
-                <td className="px-5 py-4 text-center">
+                <td className="px-5 py-4 text-center whitespace-nowrap">
                   <Pill value={dept.totalResources ?? 0} label="files" />
                 </td>
-                <td className="px-5 py-4 text-center">
+                <td className="px-5 py-4 text-center whitespace-nowrap">
                   <Pill value={dept.totalSearches ?? 0} label="hits" />
                 </td>
-                <td className="px-5 py-4 text-center">
+                <td className="px-5 py-4 text-center whitespace-nowrap">
                   <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${
                     dept.isActive
                       ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400"
@@ -387,7 +387,7 @@ function AdminDepartmets() {
                     {dept.isActive ? "Active" : "Inactive"}
                   </span>
                 </td>
-                <td className="px-5 py-4 text-right">
+                <td className="px-5 py-4 text-right whitespace-nowrap">
                   <div className="inline-flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                     <Link
                       href={`/admin/departments/view?id=${dept._id}`}

@@ -2,7 +2,7 @@ import { AddResourceForm } from '../../../../components/Admin/AddResources/AddRe
 
 export default function AddResourcesPage() {
   return (
-    <div className="py-18 lg:py-0 lg:m-18">
+    <div className="pt-24 pb-16 px-4 sm:px-6 max-w-4xl mx-auto w-full">
       <AddResourceForm />
     </div>
   )

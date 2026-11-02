@@ -141,7 +141,7 @@ export default function SubjectEdit() {
   }
 
   return (
-    <div className="pt-24 pb-16 px-4 sm:px-10 lg:px-18 max-w-3xl mx-auto w-full font-mono flex flex-col gap-6">
+    <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto w-full font-mono flex flex-col gap-6">
       {/* Top Breadcrumb */}
       <div className="flex items-center justify-between">
         <button

@@ -106,7 +106,7 @@ export default function SubjectDetails() {
   }
 
   return (
-    <div className="pt-24 pb-16 px-4 sm:px-10 lg:px-18 max-w-5xl mx-auto w-full font-mono flex flex-col gap-8">
+    <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full font-mono flex flex-col gap-8">
       {/* Top Navigation */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <button

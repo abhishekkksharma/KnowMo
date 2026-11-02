@@ -45,7 +45,7 @@ export default function AdminMain() {
   const { user } = useAdminAuth();
 
   return (
-    <section className="pt-24 px-4 sm:px-10 lg:px-18 max-w-7xl mx-auto w-full flex flex-col gap-10">
+    <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex flex-col gap-10">
       {/* Welcome Banner */}
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
