@@ -1,9 +1,10 @@
 import React from 'react'
+import AdminSubjects from '../../../../components/Admin/AdminSubjects/AdminSubjects'
 
-function page() {
+export default function SubjectsPage() {
   return (
-    <div>page</div>
+    <div>
+      <AdminSubjects />
+    </div>
   )
 }
-
-export default page

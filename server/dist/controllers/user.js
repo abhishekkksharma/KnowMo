@@ -4,17 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("../models/user.model"));
-const jwt = require('jsonwebtoken');
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const JWT_SECRET = process.env.JWT_SECRET;
 async function handleUserSignup(req, res) {
     try {
         const { name, email, password, department, departmentCode, currentYear } = req.body;
         if (!name ||
             !email ||
-            !password ||
-            !department ||
-            !departmentCode ||
-            !currentYear) {
+            !password) {
             return res.status(400).json({
                 success: false,
                 message: "Missing required fields",
@@ -57,7 +54,106 @@ async function handleUserSignup(req, res) {
         });
     }
 }
+async function handleSignIn(req, res) {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Missing required fields",
+            });
+        }
+        if (!JWT_SECRET) {
+            throw new Error("JWT_SECRET is not configured");
+        }
+        const user = await user_model_1.default.findOne({ email });
+        if (!user || user.password !== password) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid email or password",
+            });
+        }
+        if (!user.isAdmin) {
+            return res.status(403).json({
+                success: false,
+                message: "Admin access required",
+            });
+        }
+        const token = jsonwebtoken_1.default.sign({
+            userId: user._id,
+            email: user.email,
+            isAdmin: user.isAdmin,
+        }, JWT_SECRET, { expiresIn: "1d" });
+        return res.status(200).json({
+            success: true,
+            message: "Admin login successful",
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+            },
+        });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+        });
+    }
+}
+async function handleGetMe(req, res) {
+    try {
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({
+                success: false,
+                message: "Authorization token required",
+            });
+        }
+        const token = authHeader.split(" ")[1];
+        if (!JWT_SECRET) {
+            throw new Error("JWT_SECRET is not configured");
+        }
+        const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
+        const user = await user_model_1.default.findById(decoded.userId).select("-password");
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+        if (!user.isAdmin) {
+            return res.status(403).json({
+                success: false,
+                message: "Admin access required",
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                department: user.department,
+                departmentCode: user.departmentCode,
+                currentYear: user.currentYear,
+                isAdmin: user.isAdmin,
+            },
+        });
+    }
+    catch (error) {
+        return res.status(401).json({
+            success: false,
+            message: "Invalid or expired token",
+        });
+    }
+}
 module.exports = {
     handleUserSignup,
+    handleSignIn,
+    handleGetMe,
 };
 //# sourceMappingURL=user.js.map

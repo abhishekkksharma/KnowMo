@@ -2,10 +2,10 @@ import mongoose, { Document } from "mongoose";
 export interface IUser extends Document {
     name: string;
     email: string;
-    department: string;
-    departmentCode: string;
-    currentYear: number;
-    credits: number;
+    department?: string;
+    departmentCode?: string;
+    currentYear?: number;
+    credits?: number;
     password: string;
     lastLogin?: Date;
     isAdmin: boolean;

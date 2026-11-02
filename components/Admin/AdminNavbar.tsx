@@ -10,6 +10,7 @@ import {
   LayoutDashboard,
   BookOpen,
   Building2,
+  Inbox,
   FilePlus2,
   ClipboardCheck,
   ChevronRight,
@@ -26,7 +27,7 @@ const navLinks = [
   { label: "Dashboard",   href: "/admin",              icon: LayoutDashboard },
   { label: "Subjects",    href: "/admin/subjects",     icon: BookOpen        },
   { label: "Departments", href: "/admin/departments",  icon: Building2       },
-  { label: "Requests",    href: "/admin/requests",     icon: Building2       },
+  { label: "Requests",    href: "/admin/requests",     icon: Inbox           },
 ];
 
 // These two are grouped under a single "Resources" hover-dropdown on desktop

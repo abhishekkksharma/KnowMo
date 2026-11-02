@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { CLIENT_BASE_URL } from "@/lib/apiConfig";
 
-const baseUrl = process.env.NEXT_PUBLIC_CLIENT_BASE_URL;
+const baseUrl = CLIENT_BASE_URL;
 
 interface RequestFormProps {
     type: "Department" | "Subject";

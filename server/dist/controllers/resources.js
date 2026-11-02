@@ -109,12 +109,18 @@ async function handleGetTestMcqs(req, res) {
                 message: "MCQs not found.",
             });
         }
-        let questions = [...subject.questionBank];
-        // Shuffle and return only `count` questions if requested
-        if (!isNaN(count) && count > 0) {
-            questions = questions.sort(() => Math.random() - 0.5).slice(0, count);
+        // Create a copy and shuffle questions on every request
+        const questions = [...subject.questionBank];
+        // Fisher-Yates shuffle
+        for (let i = questions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [questions[i], questions[j]] = [questions[j], questions[i]];
         }
-        const testQuestions = questions.map((q) => ({
+        // Return only the requested number of questions, if provided
+        const testQuestions = !isNaN(count) && count > 0
+            ? questions.slice(0, Math.min(Math.floor(count), questions.length))
+            : questions;
+        const data = testQuestions.map((q) => ({
             question: q.question,
             options: q.options,
             correctAnswer: q.correctAnswer,
@@ -122,8 +128,8 @@ async function handleGetTestMcqs(req, res) {
         }));
         return res.status(200).json({
             success: true,
-            total: testQuestions.length,
-            data: testQuestions,
+            total: data.length,
+            data,
         });
     }
     catch (error) {

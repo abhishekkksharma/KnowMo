@@ -98,6 +98,18 @@ async function handleAddNewSubject(
   }
 }
 
+async function handleGetAllSubjects(req: Request, res: Response) {
+  try {
+    const subjects = await Subject.find().sort({ createdAt: -1 });
+    return res.status(200).json({ subjects });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Failed to fetch subjects",
+    });
+  }
+}
+
 async function handleGetSubjects(
     req: Request<{ departmentCode: string }>,
     res: Response
@@ -122,5 +134,6 @@ async function handleGetSubjects(
 
 module.exports={
     handleAddNewSubject,
-    handleGetSubjects
+    handleGetSubjects,
+    handleGetAllSubjects
 }

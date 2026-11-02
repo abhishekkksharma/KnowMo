@@ -78,6 +78,18 @@ async function handleAddNewSubject(req, res) {
         });
     }
 }
+async function handleGetAllSubjects(req, res) {
+    try {
+        const subjects = await subject_model_1.default.find().sort({ createdAt: -1 });
+        return res.status(200).json({ subjects });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Failed to fetch subjects",
+        });
+    }
+}
 async function handleGetSubjects(req, res) {
     try {
         const { departmentCode } = req.params;
@@ -94,6 +106,7 @@ async function handleGetSubjects(req, res) {
 }
 module.exports = {
     handleAddNewSubject,
-    handleGetSubjects
+    handleGetSubjects,
+    handleGetAllSubjects
 };
 //# sourceMappingURL=subject.js.map

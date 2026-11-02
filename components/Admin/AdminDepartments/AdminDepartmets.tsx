@@ -11,8 +11,9 @@ import {
   RefreshCw,
 } from "lucide-react";
 import React, { useState, useEffect, useCallback, FormEvent } from "react";
+import { API_BASE_URL } from "@/lib/apiConfig";
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = API_BASE_URL;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Department {

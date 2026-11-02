@@ -1,9 +1,10 @@
 import React from 'react'
+import MappedRequests from '../../../../components/Admin/MappedRequests'
 
-function page() {
+export default function RequestsPage() {
   return (
-    <div>page</div>
+    <div className="pt-24 px-4 sm:px-10 lg:px-18 max-w-7xl mx-auto w-full">
+      <MappedRequests />
+    </div>
   )
 }
-
-export default page

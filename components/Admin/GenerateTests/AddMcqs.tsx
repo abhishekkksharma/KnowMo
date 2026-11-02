@@ -9,8 +9,9 @@ import {
   AlertCircle,
 } from "lucide-react";
 import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { API_BASE_URL } from "@/lib/apiConfig";
 
-const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL+'/api' || 'http://localhost:5000/api';
+const NEXT_PUBLIC_CLIENT_BASE_URL = API_BASE_URL;
 
 const DEFAULT_JSON = `[
   {

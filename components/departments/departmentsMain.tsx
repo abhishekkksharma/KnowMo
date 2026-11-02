@@ -5,6 +5,7 @@ import DepartmentCard from "./departmentCard";
 import { Search } from "lucide-react";
 import RequestForm from "../RequestForm";
 import ServerError from "../ServerError";
+import { CLIENT_BASE_URL } from "@/lib/apiConfig";
 
 interface Department {
   _id: string;
@@ -14,7 +15,7 @@ interface Department {
   departmentCode: string;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_CLIENT_BASE_URL;
+const baseUrl = CLIENT_BASE_URL;
 
 function DepartmentMain() {
   const [departments, setDepartments] = useState<Department[]>([]);

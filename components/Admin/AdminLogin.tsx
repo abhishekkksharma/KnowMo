@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import { useAdminAuth } from "./AdminAuthContext";
+import { CLIENT_BASE_URL } from "@/lib/apiConfig";
 
-const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL || "http://localhost:5000";
+const BASE_URL = CLIENT_BASE_URL;
 
 function AdminLogin() {
   const [email, setEmail] = useState("");

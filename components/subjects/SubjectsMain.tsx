@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SubjectCard from "./subjectCard";
 import { Search, LayoutGrid, LayoutList } from "lucide-react";
 import RequestForm from "../RequestForm";
+import { CLIENT_BASE_URL } from "@/lib/apiConfig";
 
 interface Subject {
     _id: string;
@@ -14,7 +15,7 @@ interface Subject {
     departmentCode: string;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_CLIENT_BASE_URL;
+const baseUrl = CLIENT_BASE_URL;
 
 export default function SubjectMain({
     departmentCode,

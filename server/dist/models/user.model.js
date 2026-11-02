@@ -83,7 +83,6 @@ const userSchema = new mongoose_1.Schema({
 }, {
     timestamps: true,
 });
-// userSchema.index({ departmentCode: 1 });
 const User = mongoose_1.default.model("User", userSchema);
 exports.default = User;
 //# sourceMappingURL=user.model.js.map

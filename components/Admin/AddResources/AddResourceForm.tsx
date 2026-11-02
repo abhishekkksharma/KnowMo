@@ -10,8 +10,9 @@ import {
 } from "lucide-react";
 import { SubjectSelector } from "./SubjectSelector";
 import { useSubjectSelector } from "./useSubjectSelector";
+import { API_BASE_URL } from "@/lib/apiConfig";
 
-const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL+'/api' || 'http://localhost:5000/api';
+const NEXT_PUBLIC_CLIENT_BASE_URL = API_BASE_URL;
 
 const RESOURCE_TYPES = [
   { value: "notes", label: "Notes" },

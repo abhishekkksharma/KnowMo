@@ -2,8 +2,9 @@
 
 import { Loader2, Sparkles, MessageSquareText, ChevronDown, CheckCircle2, AlertCircle } from 'lucide-react';
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { API_BASE_URL } from '@/lib/apiConfig';
 
-const NEXT_PUBLIC_CLIENT_BASE_URL = process.env.NEXT_PUBLIC_CLIENT_BASE_URL+'/api' || 'http://localhost:5000/api';
+const NEXT_PUBLIC_CLIENT_BASE_URL = API_BASE_URL;
 
 interface Department {
     _id: string;
