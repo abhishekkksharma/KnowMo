@@ -9,8 +9,12 @@ import {
   CheckCircle2,
   Plus,
   RefreshCw,
+  Eye,
+  Pencil,
 } from "lucide-react";
 import React, { useState, useEffect, useCallback, FormEvent } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { API_BASE_URL } from "@/lib/apiConfig";
 
 interface Subject {
@@ -227,6 +231,7 @@ function AddSubjectModal({ departments, onClose, onCreated }: AddSubjectModalPro
 }
 
 export default function AdminSubjects() {
+  const router = useRouter();
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [loading, setLoading] = useState(true);
@@ -374,6 +379,7 @@ export default function AdminSubjects() {
               <th className="px-5 py-3.5 font-semibold text-center">Semester</th>
               <th className="px-5 py-3.5 font-semibold text-center">Resources</th>
               <th className="px-5 py-3.5 font-semibold text-center">Searches</th>
+              <th className="px-5 py-3.5 font-semibold text-right">Actions</th>
             </tr>
           </thead>
 
@@ -381,7 +387,7 @@ export default function AdminSubjects() {
             {loading && (
               Array.from({ length: 4 }).map((_, i) => (
                 <tr key={i} className="border-t border-zinc-100 dark:border-zinc-800">
-                  {Array.from({ length: 7 }).map((__, j) => (
+                  {Array.from({ length: 8 }).map((__, j) => (
                     <td key={j} className="px-5 py-4">
                       <div className="h-3 rounded-full bg-zinc-100 dark:bg-zinc-800 animate-pulse" style={{ width: j === 0 ? "70%" : "40%" }} />
                     </td>
@@ -393,9 +399,10 @@ export default function AdminSubjects() {
             {!loading && filtered.map((sub) => (
               <tr
                 key={sub._id}
-                className="border-t border-zinc-100 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/40 transition-colors"
+                onClick={() => router.push(`/admin/subjects/view?id=${sub._id}`)}
+                className="border-t border-zinc-100 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/40 transition-colors cursor-pointer group"
               >
-                <td className="px-5 py-4 font-medium text-zinc-800 dark:text-zinc-100">
+                <td className="px-5 py-4 font-medium text-zinc-800 dark:text-zinc-100 group-hover:text-black dark:group-hover:text-white">
                   {sub.name}
                 </td>
                 <td className="px-5 py-4 text-center">
@@ -420,12 +427,30 @@ export default function AdminSubjects() {
                 <td className="px-5 py-4 text-center text-zinc-600 dark:text-zinc-400">
                   {sub.totalSearches ?? 0}
                 </td>
+                <td className="px-5 py-4 text-right">
+                  <div className="inline-flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                    <Link
+                      href={`/admin/subjects/view?id=${sub._id}`}
+                      className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                      title="View Details"
+                    >
+                      <Eye size={15} />
+                    </Link>
+                    <Link
+                      href={`/admin/subjects/edit?id=${sub._id}`}
+                      className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                      title="Edit Subject"
+                    >
+                      <Pencil size={15} />
+                    </Link>
+                  </div>
+                </td>
               </tr>
             ))}
 
             {!loading && !fetchError && filtered.length === 0 && (
               <tr>
-                <td colSpan={7} className="py-14 text-center">
+                <td colSpan={8} className="py-14 text-center">
                   <BookOpen size={32} className="mx-auto mb-3 text-zinc-300 dark:text-zinc-700" />
                   <p className="text-sm text-zinc-400">
                     {search ? "No subjects match your search." : "No subjects yet."}

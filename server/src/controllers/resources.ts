@@ -110,8 +110,8 @@ async function handleGetResourcesBySubjectCode(
 
     const upperSubjectCode = subjectCode.trim().toUpperCase();
 
-    // Fetch the subject to verify it exists
-    const subject = await Subject.findOne({ subjectCode: upperSubjectCode });
+    // Fetch the subject to verify it exists (exclude questionBank to save bandwidth)
+    const subject = await Subject.findOne({ subjectCode: upperSubjectCode }).select("-questionBank");
     if (!subject) {
       return res.status(404).json({ message: "Subject not found" });
     }

@@ -76,8 +76,8 @@ async function handleGetResourcesBySubjectCode(req, res) {
             return res.status(400).json({ message: "Subject code is required" });
         }
         const upperSubjectCode = subjectCode.trim().toUpperCase();
-        // Fetch the subject to verify it exists
-        const subject = await subject_model_1.default.findOne({ subjectCode: upperSubjectCode });
+        // Fetch the subject to verify it exists (exclude questionBank to save bandwidth)
+        const subject = await subject_model_1.default.findOne({ subjectCode: upperSubjectCode }).select("-questionBank");
         if (!subject) {
             return res.status(404).json({ message: "Subject not found" });
         }

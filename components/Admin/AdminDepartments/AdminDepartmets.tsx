@@ -9,8 +9,12 @@ import {
   CheckCircle2,
   Plus,
   RefreshCw,
+  Eye,
+  Pencil,
 } from "lucide-react";
 import React, { useState, useEffect, useCallback, FormEvent } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { API_BASE_URL } from "@/lib/apiConfig";
 
 const API_BASE = API_BASE_URL;
@@ -214,6 +218,7 @@ function AddDepartmentModal({ onClose, onCreated }: AddModalProps) {
 
 // ─── Main component ───────────────────────────────────────────────────────────
 function AdminDepartmets() {
+  const router = useRouter();
   const [departments, setDepartments] = useState<Department[]>([]);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState("");
@@ -327,6 +332,7 @@ function AdminDepartmets() {
               <th className="px-5 py-3.5 font-semibold text-center">Resources</th>
               <th className="px-5 py-3.5 font-semibold text-center">Searches</th>
               <th className="px-5 py-3.5 font-semibold text-center">Status</th>
+              <th className="px-5 py-3.5 font-semibold text-right">Actions</th>
             </tr>
           </thead>
 
@@ -335,7 +341,7 @@ function AdminDepartmets() {
             {loading && (
               Array.from({ length: 4 }).map((_, i) => (
                 <tr key={i} className="border-t border-zinc-100 dark:border-zinc-800">
-                  {Array.from({ length: 7 }).map((__, j) => (
+                  {Array.from({ length: 8 }).map((__, j) => (
                     <td key={j} className="px-5 py-4">
                       <div className="h-3 rounded-full bg-zinc-100 dark:bg-zinc-800 animate-pulse" style={{ width: j === 0 ? "70%" : "40%" }} />
                     </td>
@@ -348,9 +354,10 @@ function AdminDepartmets() {
             {!loading && filtered.map((dept) => (
               <tr
                 key={dept._id}
-                className="border-t border-zinc-100 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/40 transition-colors"
+                onClick={() => router.push(`/admin/departments/view?id=${dept._id}`)}
+                className="border-t border-zinc-100 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/40 transition-colors cursor-pointer group"
               >
-                <td className="px-5 py-4 font-medium text-zinc-800 dark:text-zinc-100">
+                <td className="px-5 py-4 font-medium text-zinc-800 dark:text-zinc-100 group-hover:text-black dark:group-hover:text-white">
                   {dept.name}
                 </td>
                 <td className="px-5 py-4 text-center">
@@ -380,13 +387,31 @@ function AdminDepartmets() {
                     {dept.isActive ? "Active" : "Inactive"}
                   </span>
                 </td>
+                <td className="px-5 py-4 text-right">
+                  <div className="inline-flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                    <Link
+                      href={`/admin/departments/view?id=${dept._id}`}
+                      className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                      title="View Details"
+                    >
+                      <Eye size={15} />
+                    </Link>
+                    <Link
+                      href={`/admin/departments/edit?id=${dept._id}`}
+                      className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-200 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                      title="Edit Department"
+                    >
+                      <Pencil size={15} />
+                    </Link>
+                  </div>
+                </td>
               </tr>
             ))}
 
             {/* Empty */}
             {!loading && !fetchError && filtered.length === 0 && (
               <tr>
-                <td colSpan={7} className="py-14 text-center">
+                <td colSpan={8} className="py-14 text-center">
                   <Building2 size={32} className="mx-auto mb-3 text-zinc-300 dark:text-zinc-700" />
                   <p className="text-sm text-zinc-400">
                     {search ? "No departments match your search." : "No departments yet."}
